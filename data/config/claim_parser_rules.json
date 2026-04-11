@@ -1,0 +1,311 @@
+{
+  "NEGATION_CUES": [
+    "not",
+    "no",
+    "without",
+    "rather than",
+    "instead of"
+  ],
+  "NEGATION_OPTIONAL_FILLERS": [
+    "a",
+    "an",
+    "the",
+    "merely",
+    "just",
+    "pure",
+    "simply"
+  ],
+  "GENERIC_POSITIVE_CUES": [
+    "support",
+    "supports",
+    "help",
+    "helps",
+    "work",
+    "works",
+    "improve",
+    "improves",
+    "increase",
+    "increases",
+    "reduce",
+    "reduces",
+    "boost",
+    "boosts",
+    "gain",
+    "gains",
+    "build",
+    "burn"
+  ],
+  "EXAGGERATION_CUES": [
+    "huge",
+    "massive",
+    "guaranteed",
+    "for everyone",
+    "always",
+    "fast",
+    "extreme",
+    "unstoppable",
+    "any sport"
+  ],
+  "CAUTIOUS_CUES": [
+    "may",
+    "can",
+    "small",
+    "modest",
+    "slight",
+    "slightly",
+    "not always better",
+    "moderate doses"
+  ],
+  "CONJUNCTION_CUES": [
+    " and ",
+    " plus ",
+    " while ",
+    " also "
+  ],
+  "OUT_OF_SCOPE_INGREDIENT_CUES": {
+    "electrolyte": "electrolytes",
+    "electrolytes": "electrolytes",
+    "electrolyte drink": "electrolytes",
+    "electrolyte drinks": "electrolytes",
+    "electrolyte tab": "electrolytes",
+    "electrolyte tabs": "electrolytes",
+    "electrolyte powder": "electrolytes"
+  },
+  "OUT_OF_SCOPE_TUPLE_RULES": {
+    "electrolytes": {
+      "claim_type": "performance",
+      "outcome_target": "hydration_performance",
+      "required_phrase_groups": [
+        [
+          "hydration",
+          "hydration output",
+          "sustain hydration"
+        ],
+        [
+          "performance",
+          "output",
+          "long sessions",
+          "during long sessions"
+        ]
+      ]
+    }
+  },
+  "MATRIX_HINTS": {
+    "M01": [
+      "strength",
+      "maximal strength",
+      "maximal force",
+      "pure maximal strength",
+      "stronger",
+      "lift heavier",
+      "heavier",
+      "resistance training"
+    ],
+    "M02": [
+      "power",
+      "repeated power",
+      "repeated-power",
+      "explosive",
+      "explosive performance",
+      "repeated sprint",
+      "repeated efforts",
+      "short burst"
+    ],
+    "M03": [
+      "lean mass",
+      "muscle gain",
+      "muscle gains",
+      "size gain",
+      "size gains",
+      "lean tissue",
+      "muscle size",
+      "muscle size upside",
+      "size upside",
+      "build muscle",
+      "muscle",
+      "hypertrophy",
+      "hypertrophy effect"
+    ],
+    "M04": [
+      "fatigue",
+      "perceived fatigue",
+      "perceived exertion",
+      "how hard the session feels",
+      "effort",
+      "lower effort",
+      "energy",
+      "alertness"
+    ],
+    "M05": [
+      "endurance",
+      "exercise performance",
+      "performance",
+      "race day",
+      "race pace",
+      "race pace output",
+      "time trial"
+    ],
+    "M06": [
+      "exercise capacity",
+      "high intensity",
+      "high intensity exercise capacity",
+      "hard interval capacity",
+      "tolerance",
+      "ergogenic",
+      "loading period",
+      "any sport",
+      "every event",
+      "build up",
+      "build-up",
+      "every sport"
+    ],
+    "M07": [
+      "recovery",
+      "recover",
+      "recover faster",
+      "post exercise",
+      "after lifting",
+      "muscle function"
+    ],
+    "M08": [
+      "lean mass",
+      "muscle growth",
+      "build lean muscle",
+      "muscle gain",
+      "lean body mass"
+    ],
+    "M09": [
+      "soreness",
+      "muscle soreness",
+      "recovery"
+    ],
+    "M10": [
+      "fat loss",
+      "burn fat",
+      "body fat",
+      "strip body fat",
+      "cutting phase",
+      "fat mass",
+      "dieting"
+    ]
+  },
+  "MATRIX_HINT_WEIGHTS": {
+    "M01": {
+      "strength": 4,
+      "maximal strength": 5,
+      "maximal force": 5,
+      "pure maximal strength": 5,
+      "stronger": 4,
+      "lift heavier": 4,
+      "heavier": 3,
+      "resistance training": 1,
+      "increases strength": 4,
+      "boosts strength": 4
+    },
+    "M02": {
+      "power": 4,
+      "repeated power": 5,
+      "repeated-power": 5,
+      "explosive": 4,
+      "explosive performance": 4,
+      "repeated sprint": 4,
+      "repeated efforts": 3,
+      "short burst": 3,
+      "improves power": 4,
+      "enhances explosive performance": 4
+    },
+    "M03": {
+      "lean mass": 4,
+      "muscle gain": 4,
+      "muscle gains": 4,
+      "size gain": 4,
+      "size gains": 4,
+      "lean tissue": 5,
+      "muscle size": 4,
+      "muscle size upside": 5,
+      "size upside": 4,
+      "build muscle": 4,
+      "hypertrophy": 4,
+      "hypertrophy effect": 5,
+      "muscle": 1,
+      "helps build muscle": 4,
+      "supports lean mass": 4
+    },
+    "M04": {
+      "fatigue": 4,
+      "perceived fatigue": 5,
+      "perceived exertion": 5,
+      "how hard the session feels": 5,
+      "effort": 1,
+      "lower effort": 4,
+      "energy": 2,
+      "alertness": 2,
+      "boosts energy": 3,
+      "reduces fatigue": 4
+    },
+    "M05": {
+      "endurance": 4,
+      "exercise performance": 2,
+      "performance": 1,
+      "race day": 2,
+      "race pace": 4,
+      "race pace output": 5,
+      "time trial": 4,
+      "improves performance": 3,
+      "enhances endurance": 4
+    },
+    "M06": {
+      "exercise capacity": 5,
+      "high intensity": 3,
+      "high intensity exercise capacity": 5,
+      "hard interval capacity": 4,
+      "tolerance": 3,
+      "ergogenic": 1,
+      "loading period": 2,
+      "any sport": 2,
+      "every event": 2,
+      "build up": 3,
+      "build-up": 3,
+      "every sport": 2,
+      "improves exercise capacity": 5,
+      "supports high intensity exercise": 4
+    },
+    "M07": {
+      "recovery": 2,
+      "recover": 2,
+      "recover faster": 4,
+      "post exercise": 3,
+      "after lifting": 3,
+      "muscle function": 3,
+      "supports recovery": 3,
+      "helps recover after training": 4
+    },
+    "M08": {
+      "lean mass": 4,
+      "muscle growth": 4,
+      "build lean muscle": 4,
+      "muscle gain": 4,
+      "lean body mass": 4,
+      "supports muscle growth": 4,
+      "helps build lean muscle": 4
+    },
+    "M09": {
+      "soreness": 4,
+      "muscle soreness": 5,
+      "recovery": 1,
+      "reduces soreness": 5,
+      "supports recovery": 1
+    },
+    "M10": {
+      "fat loss": 5,
+      "burn fat": 5,
+      "body fat": 4,
+      "strip body fat": 5,
+      "cutting phase": 4,
+      "fat mass": 4,
+      "dieting": 2,
+      "supports fat loss": 5,
+      "helps burn fat": 5
+    }
+  }
+}

@@ -1,0 +1,19 @@
+term_id,term_type,canonical_form,surface_form
+LEX_001,ingredient,creatine_monohydrate,creatine
+LEX_002,ingredient,creatine_monohydrate,creatine monohydrate
+LEX_003,ingredient,caffeine,caffeine
+LEX_004,ingredient,beta_alanine,beta-alanine
+LEX_005,ingredient,whey_protein,whey protein
+LEX_006,ingredient,whey_protein,whey
+LEX_007,ingredient,bcaa,BCAA
+LEX_008,ingredient,bcaa,branched-chain amino acids
+LEX_009,ingredient,l_carnitine,L-carnitine
+LEX_010,claim_expression,performance,boosts strength
+LEX_011,claim_expression,performance,improves performance
+LEX_012,claim_expression,recovery,recover faster
+LEX_013,claim_expression,energy_fatigue,boosts energy
+LEX_014,claim_expression,body_composition,burn fat
+LEX_015,outcome,strength,strength
+LEX_016,outcome,post_exercise_recovery,recovery
+LEX_017,dose_unit,gram,g
+LEX_018,dose_unit,milligram,mg

@@ -1,0 +1,11 @@
+matrix_id,ingredient,claim_type,outcome_target,scope_status,example_claims
+M01,creatine_monohydrate,performance,strength,evaluable,increases strength|boosts strength
+M02,creatine_monohydrate,performance,power_high_intensity_performance,evaluable,improves power|enhances explosive performance
+M03,creatine_monohydrate,body_composition,lean_mass_gain,evaluable,helps build muscle|supports lean mass
+M04,caffeine,energy_fatigue,perceived_energy_fatigue_reduction,evaluable,boosts energy|reduces fatigue
+M05,caffeine,performance,endurance_exercise_performance,evaluable,improves performance|enhances endurance
+M06,beta_alanine,performance,exercise_capacity_high_intensity_tolerance,evaluable,improves exercise capacity|supports high-intensity exercise
+M07,whey_protein,recovery,post_exercise_recovery,evaluable,supports recovery|helps recover after training
+M08,whey_protein,body_composition,lean_mass_gain,evaluable,supports muscle growth|helps build lean muscle
+M09,bcaa,recovery,muscle_soreness_recovery,evaluable,reduces soreness|supports recovery
+M10,l_carnitine,body_composition,fat_mass_reduction,evaluable,supports fat loss|helps burn fat

@@ -1,0 +1,21 @@
+query_id,query_text,expected_fragment_ids,notes
+Q01,creatine strength,FRAG_001_01|FRAG_002_01,Canonical creatine-strength query
+Q02,boosts strength creatine,FRAG_001_01|FRAG_002_01,Lexicon-style phrasing for creatine strength
+Q03,creatine power repeated sprint,FRAG_001_02,Creatine high-intensity power query
+Q04,enhances explosive performance creatine,FRAG_001_02,Matrix-style claim wording for creatine power
+Q05,creatine lean mass,FRAG_001_03|FRAG_003_01,Creatine body-composition query
+Q06,helps build muscle creatine,FRAG_001_03|FRAG_003_01,Example-claim wording for creatine lean-mass evidence
+Q07,caffeine boosts energy,FRAG_004_01|FRAG_006_01,Energy/fatigue query in claim language
+Q08,caffeine reduces fatigue,FRAG_004_01|FRAG_006_01,Fatigue-reduction wording
+Q09,caffeine endurance performance,FRAG_004_02|FRAG_005_01,Caffeine performance query
+Q10,improves performance caffeine endurance,FRAG_004_02|FRAG_005_01,Lexicon plus matrix-style endurance query
+Q11,whey recover faster,FRAG_007_01|FRAG_008_01,Recovery phrasing from lexicon
+Q12,supports recovery whey,FRAG_007_01|FRAG_008_01,Matrix-style whey recovery phrasing
+Q13,whey muscle damage recovery,FRAG_008_01,Specific recovery evidence for protein and damage markers
+Q14,whey supports muscle growth,FRAG_009_01|FRAG_009_02,Matrix-style whey body-composition query
+Q15,whey helps build lean muscle,FRAG_009_01|FRAG_009_02,Lean muscle query using example-claim wording
+Q16,protein 1.6 g kg lean mass threshold,FRAG_009_02,Constraint query around protein threshold
+Q17,beta alanine exercise capacity,FRAG_010_01|FRAG_011_01,Core beta-alanine performance query
+Q18,supports high intensity exercise beta alanine,FRAG_010_01|FRAG_011_01,Matrix-style beta-alanine phrasing
+Q19,beta alanine 4 6 g day 2 4 weeks,FRAG_011_01,Dose-duration query for beta-alanine
+Q20,high intensity performance beta alanine,FRAG_010_01|FRAG_011_01,High-intensity wording for beta-alanine
