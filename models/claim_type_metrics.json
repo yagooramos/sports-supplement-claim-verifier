@@ -1,0 +1,54 @@
+{
+  "cv_accuracy_mean": 0.9038,
+  "cv_accuracy_std": 0.0958,
+  "cv_f1_macro_mean": 0.8916,
+  "cv_f1_macro_std": 0.1128,
+  "cv_f1_weighted_mean": 0.8918,
+  "cv_f1_weighted_std": 0.109,
+  "dataset_size": 63,
+  "classes": [
+    "body_composition",
+    "energy_fatigue",
+    "performance",
+    "recovery"
+  ],
+  "training_report": {
+    "body_composition": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 18.0
+    },
+    "energy_fatigue": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 11.0
+    },
+    "performance": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 21.0
+    },
+    "recovery": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 13.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 63.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 63.0
+    }
+  }
+}

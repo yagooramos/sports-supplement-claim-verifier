@@ -7,13 +7,13 @@ Build a minimal and coherent repository around the project core:
 - canonical corpus
 - retrieval
 - reasoning
+- supervised ML classifier (bounded extension)
 
-This first project state is intended to cover:
+This project state covers:
 
 - `Speech and Natural Language Processing`
 - `Intelligent Systems`
-
-`Advanced Machine Learning` is intentionally left for a later extension.
+- `Advanced Machine Learning`
 
 ## Completed
 
@@ -26,13 +26,22 @@ This first project state is intended to cover:
 - [x] Add concise project documentation for scripts, data, and dataset sources
 - [x] Prune non-essential files from the minimal baseline
 
+## ML Extension
+
+- [x] Choose a bounded supervised learning task (claim-type classification)
+- [x] Build labeled dataset from existing corpus sources (`data/ml/claim_type_dataset.csv`)
+- [x] Implement TF-IDF + Logistic Regression classifier (`scripts/claim_type_classifier.py`)
+- [x] Evaluate with stratified 5-fold cross-validation (accuracy: ~0.90)
+- [x] Save reproducible metrics (`models/claim_type_metrics.json`)
+- [x] Document the ML component in README.md, ROADMAP.md, and docs/README.md
+
 ## Next Steps
 
 - [ ] Review the rescued files and remove anything still non-essential
 - [ ] Decide the first executable project flow
 - [ ] Add minimal run instructions for the core pipeline
 - [ ] Decide whether the parser should remain in the minimal baseline or stay documented as optional support
-- [ ] Define the next extension path for machine-learning-oriented work
+- [ ] Evaluate whether to integrate ML predictions into the reasoning layer
 
 ## Notes
 

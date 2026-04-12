@@ -71,7 +71,7 @@ The parser is treated as a support component, not as a separate top-level layer.
 
 ## Academic Alignment
 
-This first version mainly supports:
+This project supports three academic domains:
 
 - `Speech and Natural Language Processing`
   Through claim parsing, lexical retrieval, text normalization, schema alignment, and corpus-driven claim handling.
@@ -79,8 +79,8 @@ This first version mainly supports:
 - `Intelligent Systems`
   Through explicit knowledge representation, rule-based reasoning, and auditable deterministic decisions.
 
-This version does not yet position `Advanced Machine Learning` as a core contribution.
-Instead, it establishes the structured baseline that a later ML-oriented extension can build on.
+- `Advanced Machine Learning`
+  Through a supervised text classification component (TF-IDF + Logistic Regression) that predicts `claim_type` from raw claim text. This is a bounded, transparent ML extension that complements the deterministic baseline without replacing it.
 
 ## Repository Structure
 
@@ -88,7 +88,9 @@ Instead, it establishes the structured baseline that a later ML-oriented extensi
 - `data/annotations/`: canonical evidence annotations
 - `data/benchmarks/`: minimal retrieval and reasoning benchmark files
 - `data/config/`: parser configuration and domain rules
-- `scripts/`: core operational and support scripts
+- `data/ml/`: labeled dataset for the ML classifier
+- `scripts/`: core operational, support, and ML scripts
+- `models/`: saved ML metrics (model binary is gitignored and reproducible via training)
 - `docs/`: concise technical notes and script/data summaries
 - `ROADMAP.md`: current status, completed checks, and next steps
 
@@ -106,6 +108,10 @@ Instead, it establishes the structured baseline that a later ML-oriented extensi
 
 The parser was simplified by moving most domain-specific rule lists into `data/config/claim_parser_rules.json`.
 
+### Machine Learning
+
+- `scripts/claim_type_classifier.py`: supervised claim-type classifier (TF-IDF + Logistic Regression)
+
 ## Data
 
 ### Canonical Sources
@@ -121,6 +127,14 @@ The parser was simplified by moving most domain-specific rule lists into `data/c
 
 - `data/benchmarks/retrieval_eval_queries.csv`
 - `data/benchmarks/reasoning_eval_cases.csv`
+
+### ML Dataset
+
+- `data/ml/claim_type_dataset.csv`
+
+### ML Metrics
+
+- `models/claim_type_metrics.json`
 
 ## Minimal Viable Documentation
 
@@ -146,4 +160,4 @@ The current project path is:
 2. Validate the retrieval layer on the minimal benchmark.
 3. Validate the reasoning layer on the minimal benchmark.
 4. Decide whether the parser remains part of the minimal baseline or stays as support only.
-5. Define the next extension path, especially for a future machine-learning component.
+5. Evaluate and extend the ML classifier as needed.

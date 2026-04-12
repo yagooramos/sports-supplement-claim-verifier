@@ -1,0 +1,64 @@
+example_id,claim_text,claim_type,source
+MS_01,increases strength,performance,matrix_scope
+MS_02,boosts strength,performance,matrix_scope
+MS_03,improves power,performance,matrix_scope
+MS_04,enhances explosive performance,performance,matrix_scope
+MS_05,helps build muscle,body_composition,matrix_scope
+MS_06,supports lean mass,body_composition,matrix_scope
+MS_07,boosts energy,energy_fatigue,matrix_scope
+MS_08,reduces fatigue,energy_fatigue,matrix_scope
+MS_09,improves performance,performance,matrix_scope
+MS_10,enhances endurance,performance,matrix_scope
+MS_11,improves exercise capacity,performance,matrix_scope
+MS_12,supports high-intensity exercise,performance,matrix_scope
+MS_13,supports recovery,recovery,matrix_scope
+MS_14,helps recover after training,recovery,matrix_scope
+MS_15,supports muscle growth,body_composition,matrix_scope
+MS_16,helps build lean muscle,body_composition,matrix_scope
+MS_17,reduces soreness,recovery,matrix_scope
+MS_18,supports fat loss,body_composition,matrix_scope
+MS_19,helps burn fat,body_composition,matrix_scope
+RE_01,Creatine increases strength during resistance training.,performance,reasoning_eval
+RE_02,Caffeine reduces perceived fatigue during exercise.,energy_fatigue,reasoning_eval
+RE_03,Beta-alanine at 4 to 6 g per day for at least 2 weeks can support high-intensity exercise capacity.,performance,reasoning_eval
+RE_04,Whey helps you recover faster after lifting.,recovery,reasoning_eval
+RE_05,"Whey can support lean mass gains during resistance training, but more is not always better.",body_composition,reasoning_eval
+RE_06,Creatine builds huge muscle fast.,body_composition,reasoning_eval
+RE_07,Beta-alanine works for any sport even without a loading period.,performance,reasoning_eval
+RE_08,Caffeine improves endurance at moderate doses.,performance,reasoning_eval
+RE_09,Creatine may support small gains in lean mass during training.,body_composition,reasoning_eval
+RE_10,BCAA reduces muscle soreness after training.,recovery,reasoning_eval
+RE_11,L-carnitine burns fat during a cutting phase.,body_composition,reasoning_eval
+RE_12,Electrolytes improve hydration performance.,performance,reasoning_eval
+AUG_01,creatine improves strength in trained athletes,performance,augmented
+AUG_02,caffeine enhances endurance during long runs,performance,augmented
+AUG_03,beta-alanine increases exercise tolerance,performance,augmented
+AUG_04,creatine boosts power output,performance,augmented
+AUG_05,caffeine helps with endurance exercise,performance,augmented
+AUG_06,beta-alanine supports high intensity training capacity,performance,augmented
+AUG_07,creatine enhances strength gains,performance,augmented
+AUG_08,caffeine improves exercise performance,performance,augmented
+AUG_09,whey protein supports lean mass gains,body_composition,augmented
+AUG_10,creatine helps gain lean body mass,body_composition,augmented
+AUG_11,l-carnitine aids in fat reduction,body_composition,augmented
+AUG_12,whey helps with muscle growth during training,body_composition,augmented
+AUG_13,l-carnitine supports fat burning,body_composition,augmented
+AUG_14,creatine supports lean mass with resistance training,body_composition,augmented
+AUG_15,whey protein helps build muscle mass,body_composition,augmented
+AUG_16,l-carnitine helps reduce body fat,body_composition,augmented
+AUG_17,caffeine reduces perceived exertion,energy_fatigue,augmented
+AUG_18,caffeine helps fight fatigue,energy_fatigue,augmented
+AUG_19,caffeine lowers fatigue during training,energy_fatigue,augmented
+AUG_20,caffeine boosts perceived energy levels,energy_fatigue,augmented
+AUG_21,caffeine helps reduce exercise fatigue,energy_fatigue,augmented
+AUG_22,caffeine decreases feelings of tiredness,energy_fatigue,augmented
+AUG_23,caffeine fights fatigue in athletes,energy_fatigue,augmented
+AUG_24,caffeine provides an energy boost,energy_fatigue,augmented
+AUG_25,whey protein aids post-workout recovery,recovery,augmented
+AUG_26,bcaa helps with muscle recovery,recovery,augmented
+AUG_27,whey supports muscle repair after exercise,recovery,augmented
+AUG_28,bcaa reduces post-exercise soreness,recovery,augmented
+AUG_29,whey helps muscles recover after training,recovery,augmented
+AUG_30,bcaa supports recovery from intense training,recovery,augmented
+AUG_31,whey protein helps you recover after exercise,recovery,augmented
+AUG_32,bcaa aids in reducing delayed onset muscle soreness,recovery,augmented
