@@ -29,9 +29,9 @@ This project state covers:
 ## ML Extension
 
 - [x] Choose a bounded supervised learning task (claim-type classification)
-- [x] Build labeled dataset from existing corpus sources (`data/ml/claim_type_dataset.csv`)
+- [x] Build labeled dataset from corpus, PubMed ISSN position stands, and diverse augmentations (181 examples)
 - [x] Implement TF-IDF + Logistic Regression classifier (`scripts/claim_type_classifier.py`)
-- [x] Evaluate with stratified 5-fold cross-validation (accuracy: ~0.90)
+- [x] Evaluate with stratified 5-fold cross-validation (accuracy: ~0.89, F1 macro: ~0.88)
 - [x] Save reproducible metrics (`models/claim_type_metrics.json`)
 - [x] Document the ML component in README.md, ROADMAP.md, and docs/README.md
 

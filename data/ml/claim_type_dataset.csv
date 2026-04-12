@@ -30,6 +30,32 @@ RE_09,Creatine may support small gains in lean mass during training.,body_compos
 RE_10,BCAA reduces muscle soreness after training.,recovery,reasoning_eval
 RE_11,L-carnitine burns fat during a cutting phase.,body_composition,reasoning_eval
 RE_12,Electrolytes improve hydration performance.,performance,reasoning_eval
+PM_01,Creatine supplementation increases intramuscular creatine concentrations and improves high intensity exercise performance.,performance,pubmed_derived
+PM_02,Caffeine has been shown to acutely enhance various aspects of exercise performance in many but not all studies.,performance,pubmed_derived
+PM_03,Caffeine consistently improves exercise performance when consumed in doses of 3 to 6 mg per kg body mass.,performance,pubmed_derived
+PM_04,Caffeine enhances muscular endurance and movement velocity.,performance,pubmed_derived
+PM_05,Aerobic endurance shows the most consistent moderate to large benefits from caffeine.,performance,pubmed_derived
+PM_06,Beta-alanine supplementation at 4 to 6 g daily significantly augments muscle carnosine concentrations.,performance,pubmed_derived
+PM_07,Daily supplementation with 4 to 6 g of beta-alanine for at least 2 to 4 weeks improves exercise performance.,performance,pubmed_derived
+PM_08,Beta-alanine has stronger effects on exercise tasks lasting 1 to 4 minutes.,performance,pubmed_derived
+PM_09,Protein intake stimulates muscle protein synthesis in a dose-responsive manner.,body_composition,pubmed_derived
+PM_10,"To maximize anabolism one should consume protein at a target intake of 0.4 g per kg per meal, reaching at least 1.6 g per kg per day.",body_composition,pubmed_derived
+PM_11,Resistance exercise potentiates the aminoacidemia-induced rise in muscle protein synthesis.,body_composition,pubmed_derived
+PM_12,"Repeated over time, protein intake with resistance exercise results in gradual muscle hypertrophy.",body_composition,pubmed_derived
+PM_13,Leucine is the primary amino acid agonist of muscle protein synthesis.,body_composition,pubmed_derived
+PM_14,BCAA supplementation before exercise attenuates delayed onset muscle soreness induced by eccentric exercise.,recovery,pubmed_derived
+PM_15,BCAA supplementation reduces exercise-induced muscle damage markers.,recovery,pubmed_derived
+PM_16,BCAA taken before exercise had a more beneficial effect on soreness and range of motion than taken after.,recovery,pubmed_derived
+PM_17,Creatine supplementation may enhance post-exercise recovery and injury prevention.,recovery,pubmed_derived
+PM_18,Caffeine improves cognitive function including attention and vigilance during exercise.,energy_fatigue,pubmed_derived
+PM_19,Caffeine may enhance cognitive and physical performance during sleep deprivation.,energy_fatigue,pubmed_derived
+PM_20,Beta-alanine supplementation reduces neuromuscular fatigue particularly in older subjects.,energy_fatigue,pubmed_derived
+PM_21,Creatine is one of the most popular nutritional ergogenic aids for athletes.,performance,pubmed_derived
+PM_22,Supplementing with creatine is popular for improving muscle mass and performance.,performance,pubmed_derived
+PM_23,Creatine supplementation at 3 to 5 g per day is well tolerated and supports exercise adaptations.,performance,pubmed_derived
+PM_24,Caffeine is effective for improving endurance exercise in heat and altitude conditions.,performance,pubmed_derived
+PM_25,The claim that BCAA supplementation alone stimulates muscle protein synthesis is not well supported.,body_composition,pubmed_derived
+PM_26,Higher protein doses result in greater amino acid oxidation but also some tissue-building benefits.,body_composition,pubmed_derived
 AUG_01,creatine improves strength in trained athletes,performance,augmented
 AUG_02,caffeine enhances endurance during long runs,performance,augmented
 AUG_03,beta-alanine increases exercise tolerance,performance,augmented
@@ -62,3 +88,95 @@ AUG_29,whey helps muscles recover after training,recovery,augmented
 AUG_30,bcaa supports recovery from intense training,recovery,augmented
 AUG_31,whey protein helps you recover after exercise,recovery,augmented
 AUG_32,bcaa aids in reducing delayed onset muscle soreness,recovery,augmented
+DIV_01,Creatine makes you stronger during heavy lifts.,performance,diverse
+DIV_02,Caffeine gives you more power during sprints.,performance,diverse
+DIV_03,Beta-alanine helps you push harder in short intense workouts.,performance,diverse
+DIV_04,Taking creatine before a workout improves your maximal strength.,performance,diverse
+DIV_05,Caffeine supplementation boosts sprint performance.,performance,diverse
+DIV_06,Creatine loading enhances repeated sprint ability.,performance,diverse
+DIV_07,Beta-alanine allows athletes to train at higher intensities.,performance,diverse
+DIV_08,Caffeine can improve your 5K running time.,performance,diverse
+DIV_09,Creatine monohydrate is proven to increase power output in resistance exercise.,performance,diverse
+DIV_10,Caffeine taken before competition enhances athletic performance.,performance,diverse
+DIV_11,Beta-alanine helps buffer acid in muscles during intense effort.,performance,diverse
+DIV_12,Creatine is effective for improving performance in high intensity intermittent exercise.,performance,diverse
+DIV_13,Caffeine at moderate doses improves both speed and endurance.,performance,diverse
+DIV_14,Beta-alanine supplementation extends time to exhaustion.,performance,diverse
+DIV_15,Creatine helps athletes perform better during explosive movements.,performance,diverse
+DIV_16,Caffeine benefits jumping and throwing performance.,performance,diverse
+DIV_17,Beta-alanine is most effective for activities between 1 and 4 minutes.,performance,diverse
+DIV_18,Creatine supports greater training adaptations over time.,performance,diverse
+DIV_19,Caffeine has ergogenic effects on both aerobic and anaerobic exercise.,performance,diverse
+DIV_20,Whey protein combined with lifting builds more muscle than lifting alone.,body_composition,diverse
+DIV_21,Creatine supplementation during resistance training helps increase lean body mass.,body_composition,diverse
+DIV_22,L-carnitine may support fat oxidation during low intensity exercise.,body_composition,diverse
+DIV_23,Eating enough protein is essential for muscle hypertrophy.,body_composition,diverse
+DIV_24,Whey protein provides leucine which triggers muscle protein synthesis.,body_composition,diverse
+DIV_25,Creatine combined with training can lead to modest gains in muscle size.,body_composition,diverse
+DIV_26,L-carnitine supplementation is used to promote fat metabolism.,body_composition,diverse
+DIV_27,Higher protein intake supports lean tissue accretion during training.,body_composition,diverse
+DIV_28,Whey protein after resistance exercise promotes skeletal muscle growth.,body_composition,diverse
+DIV_29,L-carnitine is marketed as a supplement that helps your body burn fat.,body_composition,diverse
+DIV_30,Consuming protein at 1.6 g per kg per day is recommended for maximizing muscle gains.,body_composition,diverse
+DIV_31,Creatine supplementation may slightly increase muscle mass even without training.,body_composition,diverse
+DIV_32,Whey protein shakes help support lean muscle development.,body_composition,diverse
+DIV_33,L-carnitine plays a role in transporting fatty acids for energy production.,body_composition,diverse
+DIV_34,Protein supplementation increases fat-free mass during resistance training programs.,body_composition,diverse
+DIV_35,Creatine can help you gain muscle weight during bulking phases.,body_composition,diverse
+DIV_36,L-carnitine may help with body fat reduction during caloric deficit.,body_composition,diverse
+DIV_37,High protein diets preserve muscle mass during weight loss.,body_composition,diverse
+DIV_38,Whey protein supports positive nitrogen balance for muscle building.,body_composition,diverse
+DIV_39,Caffeine helps you feel less tired during long workouts.,energy_fatigue,diverse
+DIV_40,Caffeine supplementation reduces the rating of perceived exertion.,energy_fatigue,diverse
+DIV_41,Taking caffeine before training helps delay the onset of fatigue.,energy_fatigue,diverse
+DIV_42,Caffeine gives athletes a mental edge by improving focus and alertness.,energy_fatigue,diverse
+DIV_43,Caffeine is widely used to combat fatigue and increase wakefulness.,energy_fatigue,diverse
+DIV_44,Caffeine intake reduces the feeling of effort during moderate exercise.,energy_fatigue,diverse
+DIV_45,Caffeine can help maintain energy levels during prolonged activity.,energy_fatigue,diverse
+DIV_46,Caffeine before exercise helps you feel more energized and less fatigued.,energy_fatigue,diverse
+DIV_47,Caffeine supplementation decreases mental fatigue during demanding tasks.,energy_fatigue,diverse
+DIV_48,Caffeine lowers perceived effort making exercise feel easier.,energy_fatigue,diverse
+DIV_49,Caffeine blocks adenosine receptors which helps reduce feelings of tiredness.,energy_fatigue,diverse
+DIV_50,A cup of coffee before the gym can help reduce fatigue during your workout.,energy_fatigue,diverse
+DIV_51,Caffeine improves alertness and reduces drowsiness in athletes.,energy_fatigue,diverse
+DIV_52,Caffeine is effective at reducing perceived fatigue in both trained and untrained individuals.,energy_fatigue,diverse
+DIV_53,Caffeine fights both mental and physical tiredness during exercise.,energy_fatigue,diverse
+DIV_54,BCAA supplementation helps reduce muscle damage after eccentric exercise.,recovery,diverse
+DIV_55,Whey protein consumed after training supports faster muscle repair.,recovery,diverse
+DIV_56,BCAA intake before exercise helps minimize post-workout soreness.,recovery,diverse
+DIV_57,Whey protein helps athletes recover between training sessions.,recovery,diverse
+DIV_58,BCAA may reduce markers of muscle damage such as creatine kinase.,recovery,diverse
+DIV_59,Post-exercise protein intake helps support the recovery process.,recovery,diverse
+DIV_60,BCAA supplementation attenuates muscle soreness after intense training.,recovery,diverse
+DIV_61,Taking BCAAs before heavy training can reduce next-day soreness.,recovery,diverse
+DIV_62,Whey protein supports tissue repair and adaptation after exercise.,recovery,diverse
+DIV_63,Protein intake after exercise reduces muscle protein breakdown and supports recovery.,recovery,diverse
+DIV_64,BCAA at 9.6 g per day reduced soreness and improved range of motion after exercise.,recovery,diverse
+DIV_65,Whey protein shakes are commonly used for post-workout muscle recovery.,recovery,diverse
+DIV_66,BCAA taken before eccentric exercise reduced serum muscle damage markers.,recovery,diverse
+DIV_67,Adequate protein supports faster recovery from resistance training sessions.,recovery,diverse
+DIV_68,BCAA supplementation helps restore range of motion after damaging exercise.,recovery,diverse
+DIV_69,Creatine may help with recovery between repeated bouts of high intensity exercise.,recovery,diverse
+DIV_70,Caffeine improves both speed and strength in competitive athletes.,performance,diverse
+DIV_71,Creatine is the most well-researched supplement for improving strength.,performance,diverse
+DIV_72,Beta-alanine works best for exercises that cause a burn from acid buildup.,performance,diverse
+DIV_73,Caffeine gum and caffeine gels are effective for improving aerobic performance.,performance,diverse
+DIV_74,Pre-workout supplements containing caffeine improve both anaerobic and aerobic performance.,performance,diverse
+DIV_75,Creatine monohydrate supplementation enhances maximal strength in resistance-trained individuals.,performance,diverse
+DIV_76,Protein powder helps build bigger muscles over time.,body_composition,diverse
+DIV_77,L-carnitine supplements are used during cutting to help preserve muscle while losing fat.,body_composition,diverse
+DIV_78,Whey protein isolate provides high quality protein for muscle gain.,body_composition,diverse
+DIV_79,Creatine helps your muscles hold more water which contributes to size gains.,body_composition,diverse
+DIV_80,Caffeine keeps you going during long cardio sessions without feeling drained.,energy_fatigue,diverse
+DIV_81,A dose of caffeine can make a tough workout feel more manageable.,energy_fatigue,diverse
+DIV_82,Caffeine reduces how hard exercise feels even at the same intensity.,energy_fatigue,diverse
+DIV_83,BCAA supplementation can lessen the severity of delayed onset muscle soreness.,recovery,diverse
+DIV_84,Recovery shakes with whey protein help muscles bounce back after heavy training.,recovery,diverse
+DIV_85,Taking protein right after exercise maximizes the recovery window.,recovery,diverse
+DIV_86,Creatine supplementation improves repeated high-intensity sprint performance.,performance,diverse
+DIV_87,Caffeine improves reaction time and coordination during exercise.,performance,diverse
+DIV_88,Beta-alanine helps maintain performance during successive high-intensity intervals.,performance,diverse
+DIV_89,Protein supplementation during a caloric surplus accelerates lean mass gains.,body_composition,diverse
+DIV_90,L-carnitine is believed to help the body use stored fat as fuel during exercise.,body_composition,diverse
+DIV_91,Caffeine is the most widely used stimulant for reducing fatigue worldwide.,energy_fatigue,diverse
+DIV_92,BCAA supplementation before a marathon helps reduce post-race muscle soreness.,recovery,diverse

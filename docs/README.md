@@ -42,7 +42,7 @@ Its role is to keep the repository root clean while preserving technical clarity
 
 ### ML Data
 
-- `data/ml/claim_type_dataset.csv`: labeled dataset for claim-type classification (63 examples, 4 classes). Sources: `matrix_scope` example claims, `reasoning_eval` cases, and domain-vocabulary augmentations. Each row records its provenance in the `source` column.
+- `data/ml/claim_type_dataset.csv`: labeled dataset for claim-type classification (181 examples, 4 classes). Sources: `matrix_scope` example claims, `reasoning_eval` cases, ISSN position stand abstracts from PubMed (`pubmed_derived`), and diverse domain-vocabulary augmentations. Each row records its provenance in the `source` column.
 
 ### ML Artifacts
 
