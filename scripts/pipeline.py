@@ -3,14 +3,16 @@
 Unified pipeline orchestrator for claim verification.
 
 Connects all project components into a single callable flow:
-  vision (optional) -> parser -> retriever -> reasoner
+  vision (optional) -> parser -> LLM fallback (optional) -> retriever -> reasoner
 
 Supports three input modes:
   1. text-only:  raw claim text goes directly to parser
   2. image-only: vision extracts text, builds a synthetic claim
   3. multimodal: vision enriches user-provided text
 
-This module does not add new logic. It only wires existing components.
+When the deterministic parser fails (not_parseable or partially_parseable),
+the pipeline can optionally use a local LLM via Ollama to attempt
+structured extraction. The deterministic baseline is always tried first.
 """
 
 from __future__ import annotations
@@ -32,6 +34,12 @@ from claim_parser_v1 import build_parser
 from lexical_retriever_v1 import BM25Retriever, load_fragments
 from reasoning_v1 import build_corpus_coverage, evaluate_claim
 from vision_v1 import extract_from_image, build_claim_from_vision, tesseract_available
+from llm_adapter import (
+    is_available as llm_is_available,
+    extract_claim_fields as llm_extract_claim_fields,
+    extract_claim_from_ocr as llm_extract_claim_from_ocr,
+    generate_explanation as llm_generate_explanation,
+)
 
 # Default data paths
 MATRIX_SCOPE_CSV = PROJECT_ROOT / "data" / "sources" / "matrix_scope.csv"
@@ -47,6 +55,7 @@ class Pipeline:
         matrix_scope_csv: str | Path = MATRIX_SCOPE_CSV,
         lexicon_csv: str | Path = LEXICON_CSV,
         fragments_csv: str | Path = FRAGMENTS_CSV,
+        use_llm: bool = True,
     ):
         self.parser = build_parser(matrix_scope_csv, lexicon_csv)
 
@@ -54,6 +63,8 @@ class Pipeline:
         self.retriever = BM25Retriever(fragments_df.to_dict(orient="records"))
 
         self.corpus_coverage = build_corpus_coverage(matrix_scope_csv, fragments_csv)
+
+        self.use_llm = use_llm and llm_is_available()
 
     def run(
         self,
@@ -75,6 +86,7 @@ class Pipeline:
             input_mode = "multimodal" if claim_text else "image"
 
         # --- Step 2: Determine effective claim text ---
+        llm_ocr_extraction = None
         if claim_text and vision_result:
             # Multimodal: prefer user text but enrich with vision if it
             # found an ingredient the user text does not mention
@@ -85,8 +97,23 @@ class Pipeline:
                 if ingredient.lower() not in claim_text.lower():
                     effective_claim = f"{ingredient}: {claim_text}"
         elif vision_result:
-            # Image-only: build a synthetic claim from vision output
-            effective_claim = build_claim_from_vision(vision_result)
+            # Image-only: use LLM to intelligently select the claim from
+            # raw OCR text instead of relying on heuristic matching
+            ocr_text = str(vision_result.get("detected_text", ""))
+            if self.use_llm and ocr_text.strip():
+                llm_ocr_extraction = llm_extract_claim_from_ocr(ocr_text)
+                if llm_ocr_extraction and llm_ocr_extraction.get("claim"):
+                    claim = llm_ocr_extraction["claim"]
+                    ingr = llm_ocr_extraction.get("ingredient", "")
+                    if ingr and ingr.lower() not in claim.lower():
+                        effective_claim = f"{ingr} {claim}"
+                    else:
+                        effective_claim = claim
+                else:
+                    # LLM failed or unavailable, fall back to heuristic
+                    effective_claim = build_claim_from_vision(vision_result)
+            else:
+                effective_claim = build_claim_from_vision(vision_result)
         else:
             effective_claim = claim_text or ""
 
@@ -104,18 +131,45 @@ class Pipeline:
                 },
             }
 
-        # --- Step 3: Parse ---
+        # --- Step 3: Parse (deterministic) ---
         parse_result = self.parser.parse_claim(effective_claim)
+        llm_used = False
+        llm_extraction = None
+
+        # --- Step 3b: LLM fallback if parser failed ---
+        parse_status = str(parse_result.get("parse_status", ""))
+        if self.use_llm and parse_status in ("not_parseable", "partially_parseable"):
+            llm_extraction = llm_extract_claim_fields(effective_claim)
+            if llm_extraction and llm_extraction.get("ingredient"):
+                llm_used = True
+                parse_result["ingredient"] = llm_extraction["ingredient"]
+                parse_result["claim_type"] = llm_extraction.get("claim_type", "")
+                parse_result["outcome_target"] = llm_extraction.get("outcome_target", "")
+                if llm_extraction.get("claim_type") and llm_extraction.get("outcome_target"):
+                    parse_result["parse_status"] = "fully_parseable"
+                else:
+                    parse_result["parse_status"] = "partially_parseable"
+                parse_result["notes"] = (
+                    f"LLM fallback ({llm_extraction.get('confidence', '?')}): "
+                    f"{llm_extraction.get('reasoning', '')}"
+                )
 
         # --- Step 4: Retrieve ---
         search_results = self.retriever.search(effective_claim, top_k=top_k)
         retrieval_results = [asdict(r) for r in search_results]
         retrieval_bundle = {"retrieved_candidates": retrieval_results}
 
-        # --- Step 5: Reason ---
+        # --- Step 5: Reason (deterministic) ---
         reasoning_result = evaluate_claim(
             parse_result, retrieval_bundle, self.corpus_coverage,
         )
+
+        # --- Step 6: LLM explanation (optional) ---
+        llm_explanation = ""
+        if self.use_llm and reasoning_result.get("verdict"):
+            llm_explanation = llm_generate_explanation(
+                effective_claim, reasoning_result, retrieval_results,
+            )
 
         return {
             "input_mode": input_mode,
@@ -124,6 +178,10 @@ class Pipeline:
             "parse_result": parse_result,
             "retrieval_results": retrieval_results,
             "reasoning_result": reasoning_result,
+            "llm_used": llm_used,
+            "llm_extraction": llm_extraction,
+            "llm_ocr_extraction": llm_ocr_extraction,
+            "llm_explanation": llm_explanation,
         }
 
 

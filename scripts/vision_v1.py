@@ -56,6 +56,12 @@ _TESSERACT_AVAILABLE = False
 try:
     import pytesseract
 
+    # On Windows, Tesseract may not be on PATH after install
+    if sys.platform == "win32":
+        _win_path = Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+        if _win_path.exists():
+            pytesseract.pytesseract.tesseract_cmd = str(_win_path)
+
     pytesseract.get_tesseract_version()
     _TESSERACT_AVAILABLE = True
 except Exception:
