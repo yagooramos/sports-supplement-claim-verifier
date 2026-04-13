@@ -33,7 +33,19 @@
     "gain",
     "gains",
     "build",
-    "burn"
+    "burn",
+    "enhance",
+    "enhances",
+    "promote",
+    "promotes",
+    "maintain",
+    "maintains",
+    "preserve",
+    "preserves",
+    "stimulate",
+    "stimulates",
+    "sharpen",
+    "sharpens"
   ],
   "EXAGGERATION_CUES": [
     "huge",
@@ -44,7 +56,11 @@
     "fast",
     "extreme",
     "unstoppable",
-    "any sport"
+    "any sport",
+    "miracle",
+    "instant",
+    "dramatic",
+    "revolutionary"
   ],
   "CAUTIOUS_CUES": [
     "may",
@@ -54,7 +70,9 @@
     "slight",
     "slightly",
     "not always better",
-    "moderate doses"
+    "moderate doses",
+    "when deficient",
+    "in some studies"
   ],
   "CONJUNCTION_CUES": [
     " and ",
@@ -187,6 +205,157 @@
       "cutting phase",
       "fat mass",
       "dieting"
+    ],
+    "M11": [
+      "focus",
+      "reaction time",
+      "attention",
+      "alertness",
+      "cognitive",
+      "mental performance",
+      "concentration",
+      "vigilance",
+      "decision making"
+    ],
+    "M12": [
+      "blood flow",
+      "oxygen delivery",
+      "nitric oxide",
+      "vasodilation",
+      "muscle pump",
+      "nutrient delivery"
+    ],
+    "M13": [
+      "time to exhaustion",
+      "exercise tolerance",
+      "reps to failure",
+      "repetitions",
+      "delays fatigue"
+    ],
+    "M14": [
+      "soreness",
+      "muscle soreness",
+      "DOMS",
+      "post-exercise soreness"
+    ],
+    "M15": [
+      "muscle strength",
+      "muscle function",
+      "type II fiber",
+      "deficiency",
+      "muscle performance"
+    ],
+    "M16": [
+      "immune",
+      "immune function",
+      "immune health",
+      "infection",
+      "upper respiratory",
+      "URTI",
+      "colds",
+      "flu",
+      "sick"
+    ],
+    "M17": [
+      "inflammation",
+      "inflammatory markers",
+      "anti-inflammatory",
+      "IL-6",
+      "TNF-alpha",
+      "cytokines"
+    ],
+    "M18": [
+      "soreness",
+      "muscle soreness",
+      "DOMS",
+      "eccentric exercise"
+    ],
+    "M19": [
+      "lean mass",
+      "muscle retention",
+      "muscle preservation",
+      "caloric restriction",
+      "prevent breakdown",
+      "muscle breakdown"
+    ],
+    "M20": [
+      "muscle damage",
+      "creatine kinase",
+      "recovery",
+      "muscle protection"
+    ],
+    "M21": [
+      "buffering",
+      "acidosis",
+      "lactic acid",
+      "high intensity",
+      "exercise capacity",
+      "acid buildup"
+    ],
+    "M22": [
+      "sprint",
+      "anaerobic",
+      "repeated sprint",
+      "swimming",
+      "rowing",
+      "combat sports",
+      "power"
+    ],
+    "M23": [
+      "endurance",
+      "aerobic efficiency",
+      "oxygen cost",
+      "time trial",
+      "aerobic performance"
+    ],
+    "M24": [
+      "time to exhaustion",
+      "exercise tolerance",
+      "sustained exercise",
+      "oxygen delivery"
+    ],
+    "M25": [
+      "strength",
+      "muscular strength",
+      "bench press",
+      "leg extension",
+      "resistance training"
+    ],
+    "M26": [
+      "stress",
+      "cortisol",
+      "adaptation",
+      "adaptogen",
+      "perceived stress",
+      "anxiety"
+    ],
+    "M27": [
+      "endurance",
+      "time to exhaustion",
+      "exercise performance",
+      "exercise capacity"
+    ],
+    "M28": [
+      "fatigue",
+      "energy",
+      "oxidative stress",
+      "exercise tolerance"
+    ],
+    "M29": [
+      "cognitive",
+      "brain function",
+      "mental performance",
+      "working memory",
+      "processing speed",
+      "sleep deprivation"
+    ],
+    "M30": [
+      "protein synthesis",
+      "muscle protein synthesis",
+      "MPS",
+      "anabolism",
+      "leucine",
+      "postprandial"
     ]
   },
   "MATRIX_HINT_WEIGHTS": {
@@ -306,6 +475,157 @@
       "dieting": 2,
       "supports fat loss": 5,
       "helps burn fat": 5
+    },
+    "M11": {
+      "focus": 4,
+      "reaction time": 5,
+      "attention": 4,
+      "alertness": 3,
+      "cognitive": 4,
+      "mental performance": 4,
+      "concentration": 4,
+      "vigilance": 4,
+      "decision making": 4
+    },
+    "M12": {
+      "blood flow": 5,
+      "oxygen delivery": 5,
+      "nitric oxide": 4,
+      "vasodilation": 4,
+      "muscle pump": 3,
+      "nutrient delivery": 3
+    },
+    "M13": {
+      "time to exhaustion": 5,
+      "exercise tolerance": 4,
+      "reps to failure": 5,
+      "repetitions": 3,
+      "delays fatigue": 4
+    },
+    "M14": {
+      "soreness": 4,
+      "muscle soreness": 5,
+      "DOMS": 5,
+      "post-exercise soreness": 5
+    },
+    "M15": {
+      "muscle strength": 4,
+      "muscle function": 4,
+      "type II fiber": 5,
+      "deficiency": 3,
+      "muscle performance": 3
+    },
+    "M16": {
+      "immune": 4,
+      "immune function": 5,
+      "immune health": 5,
+      "infection": 4,
+      "upper respiratory": 5,
+      "URTI": 5,
+      "colds": 3,
+      "flu": 3,
+      "sick": 2
+    },
+    "M17": {
+      "inflammation": 5,
+      "inflammatory markers": 5,
+      "anti-inflammatory": 4,
+      "IL-6": 5,
+      "TNF-alpha": 5,
+      "cytokines": 4
+    },
+    "M18": {
+      "soreness": 4,
+      "muscle soreness": 5,
+      "DOMS": 5,
+      "eccentric exercise": 3
+    },
+    "M19": {
+      "lean mass": 4,
+      "muscle retention": 5,
+      "muscle preservation": 5,
+      "caloric restriction": 4,
+      "prevent breakdown": 4,
+      "muscle breakdown": 4
+    },
+    "M20": {
+      "muscle damage": 5,
+      "creatine kinase": 5,
+      "recovery": 2,
+      "muscle protection": 4
+    },
+    "M21": {
+      "buffering": 5,
+      "acidosis": 5,
+      "lactic acid": 4,
+      "high intensity": 3,
+      "exercise capacity": 4,
+      "acid buildup": 4
+    },
+    "M22": {
+      "sprint": 4,
+      "anaerobic": 4,
+      "repeated sprint": 5,
+      "swimming": 3,
+      "rowing": 3,
+      "combat sports": 3,
+      "power": 3
+    },
+    "M23": {
+      "endurance": 4,
+      "aerobic efficiency": 5,
+      "oxygen cost": 5,
+      "time trial": 4,
+      "aerobic performance": 4
+    },
+    "M24": {
+      "time to exhaustion": 5,
+      "exercise tolerance": 4,
+      "sustained exercise": 3,
+      "oxygen delivery": 3
+    },
+    "M25": {
+      "strength": 4,
+      "muscular strength": 5,
+      "bench press": 4,
+      "leg extension": 4,
+      "resistance training": 2
+    },
+    "M26": {
+      "stress": 4,
+      "cortisol": 5,
+      "adaptation": 3,
+      "adaptogen": 4,
+      "perceived stress": 5,
+      "anxiety": 3
+    },
+    "M27": {
+      "endurance": 4,
+      "time to exhaustion": 4,
+      "exercise performance": 3,
+      "exercise capacity": 3
+    },
+    "M28": {
+      "fatigue": 4,
+      "energy": 3,
+      "oxidative stress": 4,
+      "exercise tolerance": 3
+    },
+    "M29": {
+      "cognitive": 4,
+      "brain function": 5,
+      "mental performance": 4,
+      "working memory": 5,
+      "processing speed": 5,
+      "sleep deprivation": 4
+    },
+    "M30": {
+      "protein synthesis": 5,
+      "muscle protein synthesis": 5,
+      "MPS": 5,
+      "anabolism": 4,
+      "leucine": 3,
+      "postprandial": 3
     }
   }
 }

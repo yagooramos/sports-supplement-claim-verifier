@@ -18,6 +18,23 @@ MS_16,helps build lean muscle,body_composition,matrix_scope
 MS_17,reduces soreness,recovery,matrix_scope
 MS_18,supports fat loss,body_composition,matrix_scope
 MS_19,helps burn fat,body_composition,matrix_scope
+MS_20,improves focus,cognitive,matrix_scope
+MS_21,enhances reaction time,cognitive,matrix_scope
+MS_22,improves blood flow,performance,matrix_scope
+MS_23,extends time to exhaustion,performance,matrix_scope
+MS_24,reduces muscle soreness,recovery,matrix_scope
+MS_25,supports immune health,health,matrix_scope
+MS_26,reduces infection risk,health,matrix_scope
+MS_27,reduces inflammation,recovery,matrix_scope
+MS_28,preserves lean mass,body_composition,matrix_scope
+MS_29,stimulates muscle protein synthesis,body_composition,matrix_scope
+MS_30,enhances oxygen delivery,performance,matrix_scope
+MS_31,delays acidosis,performance,matrix_scope
+MS_32,enhances sprint performance,performance,matrix_scope
+MS_33,supports adaptation,energy_fatigue,matrix_scope
+MS_34,reduces stress and fatigue,energy_fatigue,matrix_scope
+MS_35,supports cognitive function,cognitive,matrix_scope
+MS_36,improves mental performance,cognitive,matrix_scope
 RE_01,Creatine increases strength during resistance training.,performance,reasoning_eval
 RE_02,Caffeine reduces perceived fatigue during exercise.,energy_fatigue,reasoning_eval
 RE_03,Beta-alanine at 4 to 6 g per day for at least 2 weeks can support high-intensity exercise capacity.,performance,reasoning_eval
@@ -30,6 +47,14 @@ RE_09,Creatine may support small gains in lean mass during training.,body_compos
 RE_10,BCAA reduces muscle soreness after training.,recovery,reasoning_eval
 RE_11,L-carnitine burns fat during a cutting phase.,body_composition,reasoning_eval
 RE_12,Electrolytes improve hydration performance.,performance,reasoning_eval
+RE_13,Caffeine improves focus and alertness during exercise.,cognitive,reasoning_eval
+RE_14,Ashwagandha reduces cortisol and perceived stress in athletes.,energy_fatigue,reasoning_eval
+RE_15,Vitamin D supports immune function and reduces infection risk.,health,reasoning_eval
+RE_16,Fish oil reduces inflammatory markers after intense training.,recovery,reasoning_eval
+RE_17,Beetroot juice improves endurance performance in sub-elite athletes.,performance,reasoning_eval
+RE_18,Sodium bicarbonate delays acidosis during high-intensity exercise.,performance,reasoning_eval
+RE_19,HMB preserves lean mass during caloric restriction.,body_composition,reasoning_eval
+RE_20,Taurine improves endurance time to exhaustion.,performance,reasoning_eval
 PM_01,Creatine supplementation increases intramuscular creatine concentrations and improves high intensity exercise performance.,performance,pubmed_derived
 PM_02,Caffeine has been shown to acutely enhance various aspects of exercise performance in many but not all studies.,performance,pubmed_derived
 PM_03,Caffeine consistently improves exercise performance when consumed in doses of 3 to 6 mg per kg body mass.,performance,pubmed_derived
@@ -47,8 +72,8 @@ PM_14,BCAA supplementation before exercise attenuates delayed onset muscle soren
 PM_15,BCAA supplementation reduces exercise-induced muscle damage markers.,recovery,pubmed_derived
 PM_16,BCAA taken before exercise had a more beneficial effect on soreness and range of motion than taken after.,recovery,pubmed_derived
 PM_17,Creatine supplementation may enhance post-exercise recovery and injury prevention.,recovery,pubmed_derived
-PM_18,Caffeine improves cognitive function including attention and vigilance during exercise.,energy_fatigue,pubmed_derived
-PM_19,Caffeine may enhance cognitive and physical performance during sleep deprivation.,energy_fatigue,pubmed_derived
+PM_18,Caffeine improves cognitive function including attention and vigilance during exercise.,cognitive,pubmed_derived
+PM_19,Caffeine may enhance cognitive and physical performance during sleep deprivation.,cognitive,pubmed_derived
 PM_20,Beta-alanine supplementation reduces neuromuscular fatigue particularly in older subjects.,energy_fatigue,pubmed_derived
 PM_21,Creatine is one of the most popular nutritional ergogenic aids for athletes.,performance,pubmed_derived
 PM_22,Supplementing with creatine is popular for improving muscle mass and performance.,performance,pubmed_derived
@@ -56,6 +81,34 @@ PM_23,Creatine supplementation at 3 to 5 g per day is well tolerated and support
 PM_24,Caffeine is effective for improving endurance exercise in heat and altitude conditions.,performance,pubmed_derived
 PM_25,The claim that BCAA supplementation alone stimulates muscle protein synthesis is not well supported.,body_composition,pubmed_derived
 PM_26,Higher protein doses result in greater amino acid oxidation but also some tissue-building benefits.,body_composition,pubmed_derived
+PM_27,Dietary nitrate supplementation reduces the oxygen cost of submaximal exercise.,performance,pubmed_derived
+PM_28,Beetroot juice enhances endurance exercise economy and time-trial performance.,performance,pubmed_derived
+PM_29,Sodium bicarbonate ingestion at 0.3 g per kg improves high-intensity exercise lasting 1 to 7 minutes.,performance,pubmed_derived
+PM_30,Citrulline supplementation increases plasma arginine and enhances nitric oxide production.,performance,pubmed_derived
+PM_31,Citrulline malate at 8 g may increase the number of repetitions performed during resistance exercise.,performance,pubmed_derived
+PM_32,HMB supplementation at 3 g per day reduces markers of muscle damage after intense resistance exercise.,recovery,pubmed_derived
+PM_33,HMB may help preserve lean body mass during periods of caloric restriction.,body_composition,pubmed_derived
+PM_34,Ashwagandha supplementation significantly improves maximal oxygen consumption in healthy adults.,performance,pubmed_derived
+PM_35,Ashwagandha root extract at 600 mg per day increases muscle strength and size during resistance training.,performance,pubmed_derived
+PM_36,Ashwagandha reduces serum cortisol levels and improves resistance to stress.,energy_fatigue,pubmed_derived
+PM_37,Taurine supplementation at 1 to 6 g per day improves endurance exercise performance.,performance,pubmed_derived
+PM_38,Taurine acts as an intracellular antioxidant and supports calcium handling in skeletal muscle.,performance,pubmed_derived
+PM_39,Vitamin D deficiency is associated with impaired muscle function and increased injury risk in athletes.,health,pubmed_derived
+PM_40,Correcting vitamin D deficiency improves type II muscle fiber size and neuromuscular function.,performance,pubmed_derived
+PM_41,Vitamin D supplementation reduces the incidence of upper respiratory tract infections.,health,pubmed_derived
+PM_42,Omega-3 supplementation reduces post-exercise inflammatory cytokines including IL-6 and TNF-alpha.,recovery,pubmed_derived
+PM_43,Fish oil at 2 to 4 g EPA plus DHA per day has anti-inflammatory effects in exercising populations.,recovery,pubmed_derived
+PM_44,Omega-3 fatty acids may attenuate delayed onset muscle soreness after eccentric exercise.,recovery,pubmed_derived
+PM_45,Caffeine improves reaction time and accuracy in cognitive tasks performed during exercise.,cognitive,pubmed_derived
+PM_46,Caffeine enhances sustained attention and vigilance during prolonged physical activity.,cognitive,pubmed_derived
+PM_47,Creatine supplementation may benefit cognitive processing under conditions of sleep deprivation.,cognitive,pubmed_derived
+PM_48,Creatine loading improved working memory and processing speed in sleep-deprived individuals.,cognitive,pubmed_derived
+PM_49,Vitamin D plays a critical role in calcium homeostasis and bone mineral density.,health,pubmed_derived
+PM_50,Athletes with adequate vitamin D status have lower rates of stress fractures.,health,pubmed_derived
+PM_51,Omega-3 fatty acids support cardiovascular health and may reduce exercise-induced bronchoconstriction.,health,pubmed_derived
+PM_52,Sodium bicarbonate enhances repeated sprint performance in team sport athletes.,performance,pubmed_derived
+PM_53,Nitrate supplementation improves muscle contractile efficiency during exercise.,performance,pubmed_derived
+PM_54,Beetroot juice supplementation is most effective in recreational and sub-elite athletes.,performance,pubmed_derived
 AUG_01,creatine improves strength in trained athletes,performance,augmented
 AUG_02,caffeine enhances endurance during long runs,performance,augmented
 AUG_03,beta-alanine increases exercise tolerance,performance,augmented
@@ -88,6 +141,34 @@ AUG_29,whey helps muscles recover after training,recovery,augmented
 AUG_30,bcaa supports recovery from intense training,recovery,augmented
 AUG_31,whey protein helps you recover after exercise,recovery,augmented
 AUG_32,bcaa aids in reducing delayed onset muscle soreness,recovery,augmented
+AUG_33,caffeine sharpens mental focus during competition,cognitive,augmented
+AUG_34,caffeine improves concentration and reaction speed,cognitive,augmented
+AUG_35,caffeine enhances cognitive performance during exercise,cognitive,augmented
+AUG_36,creatine supports brain function under fatigue,cognitive,augmented
+AUG_37,caffeine boosts alertness and mental clarity,cognitive,augmented
+AUG_38,caffeine improves decision-making speed during sports,cognitive,augmented
+AUG_39,vitamin D supports bone health in athletes,health,augmented
+AUG_40,vitamin D reduces risk of upper respiratory infections,health,augmented
+AUG_41,omega-3 supports heart health in active individuals,health,augmented
+AUG_42,vitamin D helps maintain healthy immune response,health,augmented
+AUG_43,fish oil supports joint health and mobility,health,augmented
+AUG_44,vitamin D is essential for calcium absorption and bone strength,health,augmented
+AUG_45,citrulline malate improves blood flow to muscles,performance,augmented
+AUG_46,beetroot juice enhances aerobic performance,performance,augmented
+AUG_47,sodium bicarbonate helps buffer lactic acid,performance,augmented
+AUG_48,ashwagandha supports strength gains during training,performance,augmented
+AUG_49,taurine helps with exercise endurance,performance,augmented
+AUG_50,nitrate supplementation reduces oxygen cost of exercise,performance,augmented
+AUG_51,HMB helps prevent muscle breakdown,body_composition,augmented
+AUG_52,HMB supports muscle retention during dieting,body_composition,augmented
+AUG_53,fish oil reduces post-exercise inflammation,recovery,augmented
+AUG_54,omega-3 helps reduce exercise-induced inflammation,recovery,augmented
+AUG_55,HMB reduces muscle damage markers after training,recovery,augmented
+AUG_56,citrulline reduces perceived muscle soreness after exercise,recovery,augmented
+AUG_57,ashwagandha lowers cortisol and stress levels,energy_fatigue,augmented
+AUG_58,ashwagandha helps the body adapt to physical stress,energy_fatigue,augmented
+AUG_59,taurine reduces oxidative stress during exercise,energy_fatigue,augmented
+AUG_60,ashwagandha combats stress-related fatigue,energy_fatigue,augmented
 DIV_01,Creatine makes you stronger during heavy lifts.,performance,diverse
 DIV_02,Caffeine gives you more power during sprints.,performance,diverse
 DIV_03,Beta-alanine helps you push harder in short intense workouts.,performance,diverse
@@ -180,3 +261,86 @@ DIV_89,Protein supplementation during a caloric surplus accelerates lean mass ga
 DIV_90,L-carnitine is believed to help the body use stored fat as fuel during exercise.,body_composition,diverse
 DIV_91,Caffeine is the most widely used stimulant for reducing fatigue worldwide.,energy_fatigue,diverse
 DIV_92,BCAA supplementation before a marathon helps reduce post-race muscle soreness.,recovery,diverse
+DIV_93,Citrulline malate increases blood flow and nutrient delivery to working muscles.,performance,diverse
+DIV_94,Beetroot juice taken before a race can improve your finishing time.,performance,diverse
+DIV_95,Sodium bicarbonate helps athletes push through high-intensity intervals.,performance,diverse
+DIV_96,Nitrate from beetroot reduces how much oxygen your body needs during exercise.,performance,diverse
+DIV_97,Citrulline supplementation enhances exercise performance by boosting nitric oxide.,performance,diverse
+DIV_98,Baking soda before a swim race can shave seconds off your time.,performance,diverse
+DIV_99,Beetroot shots are popular among endurance athletes for improving aerobic efficiency.,performance,diverse
+DIV_100,Sodium bicarbonate loading improves repeated sprint performance in team sports.,performance,diverse
+DIV_101,Citrulline malate allows you to do more reps before hitting failure.,performance,diverse
+DIV_102,Dietary nitrate improves muscle contractile efficiency during sustained exercise.,performance,diverse
+DIV_103,Ashwagandha supplementation increases bench press and leg extension strength.,performance,diverse
+DIV_104,Taurine taken before exercise improves running time to exhaustion.,performance,diverse
+DIV_105,Ashwagandha combined with resistance training enhances muscular strength gains.,performance,diverse
+DIV_106,Taurine supplementation supports endurance capacity during prolonged exercise.,performance,diverse
+DIV_107,Vitamin D supplementation restores muscle function in deficient athletes.,performance,diverse
+DIV_108,Correcting low vitamin D improves explosive power and sprint performance.,performance,diverse
+DIV_109,HMB supplementation helps maintain muscle mass during aggressive weight cuts.,body_composition,diverse
+DIV_110,HMB at 3 g per day supports lean mass retention in calorie-restricted athletes.,body_composition,diverse
+DIV_111,HMB reduces muscle protein breakdown during intense training phases.,body_composition,diverse
+DIV_112,Whey protein stimulates muscle protein synthesis better than other protein sources.,body_composition,diverse
+DIV_113,The leucine content in whey makes it ideal for triggering muscle anabolism.,body_composition,diverse
+DIV_114,Twenty to forty grams of whey protein maximally stimulates muscle protein synthesis.,body_composition,diverse
+DIV_115,HMB may help older adults preserve muscle during periods of reduced activity.,body_composition,diverse
+DIV_116,Fish oil supplementation reduces IL-6 and TNF-alpha after exhaustive exercise.,recovery,diverse
+DIV_117,Omega-3 fatty acids help reduce the inflammatory response to intense training.,recovery,diverse
+DIV_118,Fish oil at 2 to 4 grams per day reduces post-exercise inflammation markers.,recovery,diverse
+DIV_119,Citrulline malate taken before training may reduce next-day muscle soreness.,recovery,diverse
+DIV_120,HMB reduces creatine kinase levels after damaging resistance exercise.,recovery,diverse
+DIV_121,HMB supplementation attenuates exercise-induced muscle damage.,recovery,diverse
+DIV_122,Fish oil may help reduce delayed onset muscle soreness after eccentric exercise.,recovery,diverse
+DIV_123,Omega-3 supplements support faster resolution of exercise-induced inflammation.,recovery,diverse
+DIV_124,Ashwagandha significantly lowers cortisol levels in stressed individuals.,energy_fatigue,diverse
+DIV_125,Ashwagandha root extract helps the body cope with physical and mental stress.,energy_fatigue,diverse
+DIV_126,Ashwagandha at 300 mg twice daily reduces perceived stress and anxiety.,energy_fatigue,diverse
+DIV_127,Ashwagandha is an adaptogen that helps athletes manage training stress.,energy_fatigue,diverse
+DIV_128,Taurine may help reduce oxidative damage during intense exercise.,energy_fatigue,diverse
+DIV_129,Taurine in pre-workout supplements supports sustained energy during training.,energy_fatigue,diverse
+DIV_130,Ashwagandha supplementation improves resistance to stress and reduces fatigue symptoms.,energy_fatigue,diverse
+DIV_131,Taurine combined with caffeine in energy drinks helps reduce perceived tiredness.,energy_fatigue,diverse
+DIV_132,Caffeine improves attention and focus during team sport matches.,cognitive,diverse
+DIV_133,A pre-game caffeine dose sharpens reaction time on the field.,cognitive,diverse
+DIV_134,Caffeine helps athletes make faster decisions during competitive play.,cognitive,diverse
+DIV_135,Caffeine enhances visual attention and processing speed in athletes.,cognitive,diverse
+DIV_136,Caffeine at 3 mg per kg improves cognitive performance during prolonged exercise.,cognitive,diverse
+DIV_137,Caffeine reduces mental fatigue and improves concentration during long events.,cognitive,diverse
+DIV_138,Creatine supplementation may improve short-term memory under sleep deprivation.,cognitive,diverse
+DIV_139,Creatine loading enhanced cognitive processing speed in fatigued individuals.,cognitive,diverse
+DIV_140,Caffeine is widely used by esports athletes to improve reaction time and focus.,cognitive,diverse
+DIV_141,Caffeine before a game improves your ability to track moving targets.,cognitive,diverse
+DIV_142,Creatine may support brain energy metabolism and cognitive resilience under stress.,cognitive,diverse
+DIV_143,Caffeine improves mental performance even when physical fatigue is high.,cognitive,diverse
+DIV_144,Caffeine supplementation enhances both physical and cognitive performance in soldiers.,cognitive,diverse
+DIV_145,Caffeine helps maintain accuracy and speed in skill-based sports.,cognitive,diverse
+DIV_146,Creatine supplementation benefits cognitive function during demanding mental tasks.,cognitive,diverse
+DIV_147,Caffeine keeps you mentally sharp during long endurance races.,cognitive,diverse
+DIV_148,Vitamin D is essential for maintaining strong bones in athletes.,health,diverse
+DIV_149,Athletes with low vitamin D are at higher risk of stress fractures.,health,diverse
+DIV_150,Vitamin D supplementation reduces the frequency of colds and flu in athletes.,health,diverse
+DIV_151,Adequate vitamin D status supports a healthy immune system.,health,diverse
+DIV_152,Vitamin D helps the body absorb calcium for optimal bone density.,health,diverse
+DIV_153,Fish oil supports cardiovascular health in physically active people.,health,diverse
+DIV_154,Omega-3 fatty acids may reduce exercise-induced bronchoconstriction in asthmatic athletes.,health,diverse
+DIV_155,Vitamin D at 2000 IU per day helps athletes avoid upper respiratory infections.,health,diverse
+DIV_156,Omega-3 supplements support healthy blood lipid profiles in active individuals.,health,diverse
+DIV_157,Vitamin D deficiency increases the risk of musculoskeletal injuries.,health,diverse
+DIV_158,Fish oil helps maintain healthy joints and reduces stiffness in athletes.,health,diverse
+DIV_159,Adequate vitamin D intake is linked to fewer sick days in team sport athletes.,health,diverse
+DIV_160,Omega-3 fatty acids have anti-inflammatory properties that support overall athlete health.,health,diverse
+DIV_161,Vitamin D plays a critical role in immune regulation and pathogen defense.,health,diverse
+DIV_162,Fish oil supplementation supports a healthy inflammatory response to training.,health,diverse
+DIV_163,Athletes should monitor vitamin D levels to reduce injury and illness risk.,health,diverse
+DIV_164,Omega-3 intake is associated with improved cardiovascular function during exercise.,health,diverse
+DIV_165,Vitamin D supplementation is recommended for athletes training indoors or at high latitudes.,health,diverse
+DIV_166,Beetroot juice is used by cyclists to gain a competitive edge in time trials.,performance,diverse
+DIV_167,Sodium bicarbonate is a legal performance aid used in rowing and swimming.,performance,diverse
+DIV_168,Citrulline enhances the muscle pump during resistance training sessions.,performance,diverse
+DIV_169,Nitrate supplementation is most beneficial for moderate-intensity sustained exercise.,performance,diverse
+DIV_170,Sodium bicarbonate at 0.3 g per kg is the standard protocol for buffering performance.,performance,diverse
+DIV_171,Ashwagandha may improve VO2max and cardiorespiratory endurance.,performance,diverse
+DIV_172,Taurine supports exercise capacity through improved calcium signaling in muscle.,performance,diverse
+DIV_173,Beetroot juice combined with caffeine may have additive endurance benefits.,performance,diverse
+DIV_174,Sodium bicarbonate helps combat the burning sensation from lactic acid during sprints.,performance,diverse
+DIV_175,Citrulline is a popular pre-workout ingredient for improving exercise tolerance.,performance,diverse
