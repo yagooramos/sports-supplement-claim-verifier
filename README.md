@@ -46,6 +46,8 @@ The current version uses:
 - lexical retrieval to recover candidate evidence
 - deterministic reasoning to decide scope, coverage, and support
 - shallow claim parsing as a support step for raw text inputs
+- computer vision for extracting text from supplement product images
+- a Streamlit interface for interactive claim verification
 
 It does not currently depend on:
 
@@ -53,21 +55,23 @@ It does not currently depend on:
 - neural ranking
 - end-to-end machine learning
 - chatbot-style free-form generation
+- paid external APIs
 
 ## Operational Flow
 
-The current flow is:
+The system supports three input modes:
 
-1. A raw claim can be mapped into the project schema with `claim_parser_v1.py`.
+1. **Text only**: raw claim text goes directly to the parser.
+2. **Image only**: `vision_v1.py` extracts text from a supplement label image, builds a synthetic claim, then continues through the pipeline.
+3. **Multimodal** (text + image): vision enriches the user-provided text with information extracted from the image.
+
+In all cases, the downstream flow is the same:
+
+1. `claim_parser_v1.py` maps the claim into the project schema.
 2. `lexical_retriever_v1.py` retrieves candidate evidence fragments from the canonical corpus.
 3. `reasoning_v1.py` consumes structured claim information and retrieved evidence to produce a conservative outcome.
 
-The two operational layers are still:
-
-- `retrieval`
-- `reasoning`
-
-The parser is treated as a support component, not as a separate top-level layer.
+`pipeline.py` orchestrates all components. `app.py` provides the Streamlit interface.
 
 ## Academic Alignment
 
@@ -82,6 +86,9 @@ This project supports three academic domains:
 - `Advanced Machine Learning`
   Through a supervised text classification component (TF-IDF + Logistic Regression) that predicts `claim_type` from raw claim text. This is a bounded, transparent ML extension that complements the deterministic baseline without replacing it.
 
+- `Computer Vision`
+  Through a vision module that extracts text from supplement product images using OpenCV preprocessing (grayscale conversion, Gaussian blur, adaptive thresholding) and Tesseract OCR. The extracted text is transformed into structured input for the existing pipeline.
+
 ## Repository Structure
 
 - `data/sources/`: canonical source tables
@@ -89,9 +96,11 @@ This project supports three academic domains:
 - `data/benchmarks/`: minimal retrieval and reasoning benchmark files
 - `data/config/`: parser configuration and domain rules
 - `data/ml/`: labeled dataset for the ML classifier
-- `scripts/`: core operational, support, and ML scripts
+- `data/test_images/`: synthetic test images for the vision module
+- `scripts/`: core operational, support, ML, and CV scripts
 - `models/`: saved ML metrics (model binary is gitignored and reproducible via training)
 - `docs/`: concise technical notes and script/data summaries
+- `app.py`: Streamlit application entry point
 - `ROADMAP.md`: current status, completed checks, and next steps
 
 ## Scripts
@@ -111,6 +120,15 @@ The parser was simplified by moving most domain-specific rule lists into `data/c
 ### Machine Learning
 
 - `scripts/claim_type_classifier.py`: supervised claim-type classifier (TF-IDF + Logistic Regression)
+
+### Computer Vision
+
+- `scripts/vision_v1.py`: supplement label text extraction (OpenCV + Tesseract OCR)
+
+### Pipeline and Application
+
+- `scripts/pipeline.py`: unified pipeline orchestrator connecting vision, parser, retriever, and reasoner
+- `app.py`: Streamlit web interface supporting text, image, and multimodal input
 
 ## Data
 
@@ -159,5 +177,5 @@ The current project path is:
 1. Keep the corpus and schema stable and explicit.
 2. Validate the retrieval layer on the minimal benchmark.
 3. Validate the reasoning layer on the minimal benchmark.
-4. Decide whether the parser remains part of the minimal baseline or stays as support only.
-5. Evaluate and extend the ML classifier as needed.
+4. Evaluate and extend the ML classifier as needed.
+5. Extend the vision module with layout analysis or learned text detection.

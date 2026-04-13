@@ -8,12 +8,15 @@ Build a minimal and coherent repository around the project core:
 - retrieval
 - reasoning
 - supervised ML classifier (bounded extension)
+- computer vision for supplement label text extraction
+- Streamlit application interface
 
 This project state covers:
 
 - `Speech and Natural Language Processing`
 - `Intelligent Systems`
 - `Advanced Machine Learning`
+- `Computer Vision`
 
 ## Completed
 
@@ -35,13 +38,23 @@ This project state covers:
 - [x] Save reproducible metrics (`models/claim_type_metrics.json`)
 - [x] Document the ML component in README.md, ROADMAP.md, and docs/README.md
 
+## Computer Vision Extension
+
+- [x] Design CV integration strategy (OCR-based label extraction)
+- [x] Implement `scripts/vision_v1.py` (OpenCV preprocessing + Tesseract OCR + heuristic extraction)
+- [x] Implement `scripts/pipeline.py` (unified pipeline orchestrator)
+- [x] Implement `app.py` (Streamlit interface with image upload)
+- [x] Generate synthetic test image for validation
+- [x] Validate text-only and image-only pipeline flows
+- [x] Document the CV component in README.md, ROADMAP.md, and docs/README.md
+
 ## Next Steps
 
-- [ ] Review the rescued files and remove anything still non-essential
-- [ ] Decide the first executable project flow
-- [ ] Add minimal run instructions for the core pipeline
-- [ ] Decide whether the parser should remain in the minimal baseline or stay documented as optional support
+- [ ] Install Tesseract OCR and validate full image-to-verdict flow
+- [ ] Test with real supplement product photos
 - [ ] Evaluate whether to integrate ML predictions into the reasoning layer
+- [ ] Consider layout analysis or region detection for complex labels
+- [ ] Consider learned text detection (EAST, CRAFT) as a future CV extension
 
 ## Notes
 
