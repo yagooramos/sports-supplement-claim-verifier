@@ -1,42 +1,43 @@
 # Project
 
-## Final Goal
+## Project Goal
 
 The goal of this project is to build a conservative and auditable claim-verification system for sports-supplement claims.
 
-The project is built around a canonical tabular corpus with three core fields:
+The project is organized around a canonical tabular corpus with three core fields:
 
 - `ingredient`
 - `claim_type`
 - `outcome_target`
 
-On top of that corpus, the system is organized around two operational layers:
+## Final Objective
 
-- `retrieval`
-- `reasoning`
+The current baseline verifies one claim at a time and exposes the full decision flow visually:
 
-This first project state is intentionally narrow. It prioritizes:
+1. parse the claim into the project schema
+2. retrieve candidate evidence fragments
+3. apply deterministic reasoning to produce a conservative result
+
+The baseline prioritizes:
 
 - traceability
 - explicit structure
 - conservative decisions
 - minimal reproducible evaluation
 
-## Why This Design
+## Why This Architecture
 
-The current design is deliberately simple.
-
-The project does not start from a fully learned end-to-end model. Instead, it starts from:
+The project starts from:
 
 - a structured corpus
 - a lexical retrieval layer
 - a deterministic reasoning layer
 
-This choice was made for three reasons:
+This design was chosen because it:
 
-- it keeps the system interpretable
-- it makes the project easier to validate and defend
-- it creates a strong baseline that later extensions can be compared against
+- keeps the system interpretable
+- makes the verification process easy to inspect
+- provides a strong baseline for future project work
 
 ## What The Project Uses
 
@@ -46,32 +47,27 @@ The current version uses:
 - lexical retrieval to recover candidate evidence
 - deterministic reasoning to decide scope, coverage, and support
 - shallow claim parsing as a support step for raw text inputs
+- a Streamlit frontend as the main user-facing interface
 
-It does not currently depend on:
+It does not currently use:
 
 - semantic retrieval
 - neural ranking
 - end-to-end machine learning
 - chatbot-style free-form generation
 
-## Operational Flow
+## Operational Layers
 
-The current flow is:
-
-1. A raw claim can be mapped into the project schema with `claim_parser_v1.py`.
-2. `lexical_retriever_v1.py` retrieves candidate evidence fragments from the canonical corpus.
-3. `reasoning_v1.py` consumes structured claim information and retrieved evidence to produce a conservative outcome.
-
-The two operational layers are still:
+The project has two operational layers:
 
 - `retrieval`
 - `reasoning`
 
-The parser is treated as a support component, not as a separate top-level layer.
+Claim parsing is included as a support component that prepares raw text for the two main layers.
 
 ## Academic Alignment
 
-This first version mainly supports:
+This baseline mainly supports:
 
 - `Speech and Natural Language Processing`
   Through claim parsing, lexical retrieval, text normalization, schema alignment, and corpus-driven claim handling.
@@ -79,34 +75,48 @@ This first version mainly supports:
 - `Intelligent Systems`
   Through explicit knowledge representation, rule-based reasoning, and auditable deterministic decisions.
 
-This version does not yet position `Advanced Machine Learning` as a core contribution.
-Instead, it establishes the structured baseline that a later ML-oriented extension can build on.
+This baseline is not yet the machine-learning-focused stage of the project.
+Its role is to establish the structured and reproducible system that later ML work can build on or be compared against.
+
+## Project Context For Another Agent
+
+If this repository is handed to another programming agent, use `PROJECT_CONTEXT.md` as the full briefing document.
+
+That document records:
+
+- the current project scope
+- the academic role of each subject area already identified in the repository
+- the expected deliverables and constraints for this baseline
+- the current implementation status
+- the open decisions that remain before a later ML extension
 
 ## Repository Structure
 
+- `app.py`: Streamlit entrypoint for the single-claim verifier
 - `data/sources/`: canonical source tables
 - `data/annotations/`: canonical evidence annotations
 - `data/benchmarks/`: minimal retrieval and reasoning benchmark files
 - `data/config/`: parser configuration and domain rules
-- `scripts/`: core operational and support scripts
-- `docs/`: concise technical notes and script/data summaries
-- `ROADMAP.md`: current status, completed checks, and next steps
+- `scripts/`: operational logic and support modules
+- `docs/`: concise technical notes and dataset-source summaries
+- `ROADMAP.md`: current project status and next steps
 
-## Scripts
+## Main Components
 
 ### Operational
 
 - `scripts/lexical_retriever_v1.py`: lexical retrieval over the canonical evidence corpus
-- `scripts/reasoning_v1.py`: deterministic reasoning layer over structured inputs
+- `scripts/reasoning_v1.py`: deterministic reasoning over structured claim and retrieval inputs
 
 ### Support
 
 - `scripts/claim_parser_v1.py`: shallow parser for mapping raw claims into the project schema
+- `scripts/pipeline.py`: thin orchestration layer that runs parsing, retrieval, and reasoning end to end
 - `scripts/utils.py`: shared normalization and text-matching helpers
 
-The parser was simplified by moving most domain-specific rule lists into `data/config/claim_parser_rules.json`.
+The parser keeps its logic in code while its domain-specific rule lists live in `data/config/claim_parser_rules.json`.
 
-## Data
+## Minimal Data Layout
 
 ### Canonical Sources
 
@@ -124,13 +134,14 @@ The parser was simplified by moving most domain-specific rule lists into `data/c
 
 ## Minimal Viable Documentation
 
-The repository keeps documentation intentionally short:
-
 - `README.md`
-  Main project entry point: goal, design choices, academic alignment, structure, and core components.
+  Main project entry point: goal, architecture, academic alignment, structure, and run instructions.
 
 - `ROADMAP.md`
-  Current status, completed checks, and next steps.
+  Current status and next steps.
+
+- `PROJECT_CONTEXT.md`
+  Full reusable briefing for another programming agent, including academic framing, scope, deliverables, status, and constraints.
 
 - `docs/README.md`
   Short technical map of scripts, data files, and configuration.
@@ -138,12 +149,10 @@ The repository keeps documentation intentionally short:
 - `docs/dataset_sources.md`
   Overview of the external sources used to build the dataset.
 
-## Steps To Follow
+## Official Run Command
 
-The current project path is:
+Run the baseline app from the repository root:
 
-1. Keep the corpus and schema stable and explicit.
-2. Validate the retrieval layer on the minimal benchmark.
-3. Validate the reasoning layer on the minimal benchmark.
-4. Decide whether the parser remains part of the minimal baseline or stays as support only.
-5. Define the next extension path, especially for a future machine-learning component.
+```bash
+streamlit run app.py
+```

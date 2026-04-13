@@ -14,6 +14,7 @@ Its role is to keep the repository root clean while preserving technical clarity
 ### Support
 
 - `scripts/claim_parser_v1.py`: extracts a shallow structured claim representation from raw text
+- `scripts/pipeline.py`: orchestrates parsing, retrieval, and reasoning for one claim
 - `scripts/utils.py`: shared text normalization, tokenization, and phrase-matching helpers
 
 ### Configuration
@@ -39,3 +40,5 @@ Its role is to keep the repository root clean while preserving technical clarity
 ## Additional Notes
 
 - `docs/dataset_sources.md`: overview of the external sources used to gather and justify the dataset
+- `app.py`: Streamlit entrypoint for the single-claim verification interface
+- `PROJECT_CONTEXT.md`: full handoff briefing for another programming agent
