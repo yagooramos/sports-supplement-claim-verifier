@@ -1,196 +1,146 @@
 # Project Context For Another Programming Agent
 
-This document is the full repository briefing for any programming agent that needs to continue the work.
+This file describes the current repository after merging the main repo with the more advanced worktree found in `.claude/worktrees/lucid-jones`.
 
-It is intentionally more explicit than `README.md`.
-`README.md` explains the baseline.
-This file explains the academic context, the current scope, the expected deliverables, and the constraints that should shape future changes.
-
-## 1. General Project Context
+## 1. Project Summary
 
 - Project name: `Sports Supplement Claim Verifier`
-- Current repository goal: build a conservative, auditable baseline for verifying sports-supplement claims
-- Current project stage: minimal runnable baseline
-- Current interface: single-page Streamlit application
-- Baseline objective: verify one claim at a time and expose the full decision path
-- Immediate academic purpose: provide a defendable and inspectable project core before any later machine-learning extension
+- Current stage: runnable multimodal repository baseline
+- Primary objective: verify one supplement claim at a time with a conservative and auditable decision path
+- Current interface: Streamlit
+- Current repository shape: deterministic core plus bounded OCR, ML, and optional LLM extensions
 
-## 2. Executive Summary
+## 2. Current Execution Flow
 
-The project aims to verify claims about sports supplements with a conservative pipeline instead of a black-box end-to-end model.
-The current baseline works with a canonical tabular corpus and three schema fields: `ingredient`, `claim_type`, and `outcome_target`.
-From a raw claim, the system parses the text into that schema, retrieves candidate evidence fragments from the curated corpus, and applies deterministic reasoning to produce a verdict.
-The current repository is designed to be interpretable, easy to defend in an academic setting, and reproducible enough to serve as the reference baseline for later extensions.
+The current expected flow is:
 
-## 3. Academic Scope By Subject
+1. receive a claim as text, image, or both
+2. if an image is present, run OCR and structured vision extraction
+3. construct the effective claim used downstream
+4. parse the claim into `ingredient`, `claim_type`, and `outcome_target`
+5. retrieve candidate evidence fragments
+6. evaluate scope, coverage, support, and limitations
+7. produce the deterministic verdict
+8. optionally attach classifier output and optional local LLM assistance output
 
-The repository currently supports three academic areas, but only two are active in the present baseline.
+The deterministic parser, retriever, and reasoner remain authoritative.
 
-### 3.1 Speech and Natural Language Processing
+## 3. Included Components
 
-- Current role in the project:
-  claim parsing, schema alignment, text normalization, lexical retrieval, and corpus-driven handling of claim text
-- Current baseline contribution:
-  raw claims can be mapped into a structured representation and matched against the evidence corpus with transparent lexical methods
-- Evidence in the repository:
-  `scripts/claim_parser_v1.py`, `scripts/lexical_retriever_v1.py`, parser rules in `data/config/claim_parser_rules.json`, and retrieval benchmarks in `data/benchmarks/retrieval_eval_queries.csv`
-- Deliverable expectation at the current stage:
-  a clear explanation of how claims are normalized, parsed, and matched to evidence
-- Evaluation logic that should be defendable:
-  explainable preprocessing, explicit schema mapping, auditable retrieval behavior, and minimal benchmark-based validation
+### Deterministic Core
 
-### 3.2 Intelligent Systems
+- `scripts/claim_parser_v1.py`
+- `scripts/lexical_retriever_v1.py`
+- `scripts/reasoning_v1.py`
+- `scripts/pipeline.py`
+- `scripts/utils.py`
 
-- Current role in the project:
-  explicit knowledge representation and deterministic rule-based reasoning over structured claim and evidence data
-- Current baseline contribution:
-  the system produces conservative verdicts using reasoning rules rather than generative output
-- Evidence in the repository:
-  `scripts/reasoning_v1.py`, the matrix scope file, annotated evidence fragments, and reasoning benchmarks in `data/benchmarks/reasoning_eval_cases.csv`
-- Deliverable expectation at the current stage:
-  a defendable reasoning layer with transparent scope checks, support checks, and limitation handling
-- Evaluation logic that should be defendable:
-  traceable verdict rules, conservative handling of uncertainty, and explicit reason codes
+### OCR And Vision
 
-### 3.3 Advanced Machine Learning
+- `scripts/ocr_claim_extractor.py`
+- `scripts/vision_v1.py`
+- `data/test_images/creatine_label.png`
 
-- Current role in the project:
-  not part of the active baseline
-- Current status:
-  postponed intentionally
-- Why it is postponed:
-  the repository is first establishing a structured, reproducible, and auditable baseline that later ML work can improve on or compare against
-- Constraint for future agents:
-  do not reposition this baseline as an ML-heavy project unless the user explicitly asks for that extension
+### Machine Learning
 
-## 4. Current Functional Scope
+- `scripts/claim_type_classifier.py`
+- `data/ml/claim_type_dataset.csv`
+- `models/claim_type_metrics.json`
 
-### Included in the baseline
+### Optional LLM Support
 
-- accept one sports-supplement claim as raw text
-- parse the claim into the project schema
-- retrieve candidate evidence fragments from the canonical corpus
-- reason over retrieved evidence and corpus coverage
-- return a conservative verdict with explanation fields
-- expose the result through a Streamlit interface
+- `scripts/llm_adapter.py`
+- local Ollama only when available
 
-### Explicitly not included yet
+### Validation
 
-- semantic retrieval
-- neural reranking
-- end-to-end ML classification
-- free-form chatbot interaction
-- broad multi-claim workflows
-- production deployment concerns beyond local execution
-
-## 5. End-to-End Flow
-
-The expected baseline flow is:
-
-1. receive one raw claim
-2. parse it into `ingredient`, `claim_type`, and `outcome_target` when possible
-3. retrieve candidate evidence fragments from the canonical evidence corpus
-4. build the retrieval bundle for reasoning
-5. evaluate scope, coverage, support, and limitations
-6. return the verdict, reason code, explanation, and supporting fragment identifiers
-7. show the decision flow in Streamlit
-
-## 6. Technical Architecture
-
-### Frontend
-
-- Technology: Streamlit
-- Entry point: `app.py`
-- Interface style: single-page baseline for one claim at a time
-- User-facing purpose: make the pipeline easy to inspect and demo
-
-### Backend Logic
-
-- Language: Python
-- Current orchestration layer: `scripts/pipeline.py`
-- Core modules:
-  - `scripts/claim_parser_v1.py`
-  - `scripts/lexical_retriever_v1.py`
-  - `scripts/reasoning_v1.py`
-  - `scripts/utils.py`
-
-### Data Layer
-
-- `data/sources/lexicon.csv`
-- `data/sources/matrix_scope.csv`
-- `data/annotations/evidence_fragments.csv`
-- `data/config/claim_parser_rules.json`
+- `scripts/evaluate_baseline.py`
 - `data/benchmarks/retrieval_eval_queries.csv`
 - `data/benchmarks/reasoning_eval_cases.csv`
 
-## 7. Deliverables Expected From The Current Baseline
+## 4. Important Merge Decision
 
-At this repository stage, another agent should preserve or improve these deliverables:
+The advanced `.claude` worktree included a Tesseract/OpenCV-based OCR path.
+The main repository does not use that exact implementation.
 
-- runnable code for the single-claim verifier
-- a clear `README.md`
-- concise technical notes in `docs/`
-- a roadmap of current status and next decisions
-- a baseline that can be demonstrated locally with `streamlit run app.py`
-- enough structure and traceability to justify the project academically
+Instead, the merged repo keeps the current `RapidOCR`-based OCR stack because:
 
-## 8. Documentation Expectations
+- it already worked locally in this environment
+- it avoided the external system dependency on Tesseract
+- it was easier to validate immediately
 
-When updating the repository, documentation should preserve both technical clarity and academic framing.
+So the merge is feature-level, not a literal file-for-file replacement.
 
-Minimum documentation expectations:
+## 5. Current Data Snapshot
 
-- `README.md` should explain the project goal, architecture, subject alignment, structure, and run instructions
-- `PROJECT_CONTEXT.md` should remain the handoff document for another agent
-- `ROADMAP.md` should stay short and operational
-- `docs/README.md` should document scripts, data files, and configuration
-- `docs/dataset_sources.md` should justify where the dataset was assembled from
+- canonical lexicon rows: `18`
+- matrix scope rows: `10`
+- canonical evidence fragments: `15`
+- retrieval benchmark queries: `20`
+- reasoning benchmark cases: `16`
+- classifier dataset rows: `345`
 
-## 9. Current Repository Status
+## 6. Current Validation Snapshot
 
-This is the current known state of the baseline:
+Validated on April 14, 2026:
 
-- the repository has a canonical minimal data layout
-- parsing, retrieval, and reasoning modules are present
-- a small orchestration layer exists in `scripts/pipeline.py`
-- a Streamlit interface exists in `app.py`
-- `streamlit` is listed in `requirements.txt`
-- the baseline is locally runnable
-- the project is still intentionally narrow and conservative
+- retrieval benchmark: `20/20`
+- reasoning benchmark: `16/16`
+- app startup: passed
 
-## 10. Known Open Decisions
+## 7. Academic Scope
 
-These questions are still open and should not be silently decided by another agent:
+The merged repository now spans:
 
-- whether the parser should stay visible as a public baseline component or remain framed as internal support
-- what the next post-baseline step should be: benchmark inspection, corpus browsing, or ML-oriented extension work
-- how the later machine-learning stage should be introduced without weakening the interpretability of the baseline
+- `Speech and Natural Language Processing`
+  Through parsing, retrieval, OCR text extraction, normalization, and schema mapping.
 
-## 11. Constraints Another Agent Should Respect
+- `Intelligent Systems`
+  Through explicit deterministic reasoning and conservative verdict logic.
 
-- preserve the conservative and auditable character of the project
-- do not replace the current reasoning layer with opaque generation without explicit approval
-- do not present the current baseline as a full ML system
-- keep the repository coherent and easy to defend academically
-- prefer explicit and reproducible structure over sophistication for its own sake
-- avoid adding non-essential files or environment artifacts to version control
+- `Advanced Machine Learning`
+  Through the bounded TF-IDF + Logistic Regression `claim_type` classifier.
 
-## 12. Current Run Instructions
+- `Computer Vision`
+  Through OCR-assisted text extraction from supplement images.
 
-From the repository root:
+## 8. Constraints
+
+- preserve the deterministic verdict path as authoritative
+- treat OCR, classifier, and LLM layers as support layers unless explicitly re-scoped
+- keep docs aligned with actual code and benchmark state
+- do not silently turn the project into an opaque end-to-end ML system
+- prefer portability and inspectability over sophistication for its own sake
+
+## 9. Open Decisions
+
+- whether classifier output should remain advisory or feed parsing decisions
+- whether local LLM fallback should remain optional
+- whether the next UI step should focus on corpus browsing or benchmark inspection
+- whether multilingual claim handling should become a next-stage feature
+
+## 10. Practical Commands
+
+Run app:
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
-## 13. If More Academic Metadata Is Needed
+Run deterministic benchmarks:
 
-Some course-specific metadata is still unknown in the repository itself, such as:
+```bash
+python -m scripts.evaluate_baseline
+```
 
-- official subject names in the user's language
-- professor names
-- exact grading rubrics
-- exact report or presentation requirements
-- final submission format
+Train classifier:
 
-If the user provides that information later, it should be added here instead of being left implicit.
+```bash
+python -m scripts.claim_type_classifier train
+```
+
+Inspect test image:
+
+```bash
+python -m scripts.vision_v1 extract --image data/test_images/creatine_label.png
+```

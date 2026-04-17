@@ -15,21 +15,24 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import sys
 from pathlib import Path
 
 import pandas as pd
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from utils import (
-    normalize_text,
-    split_pipe_values,
-    text_has_phrase as has_phrase,
-    unique_preserving_order,
-)
+try:
+    from .utils import (
+        normalize_text,
+        split_pipe_values,
+        text_has_phrase as has_phrase,
+        unique_preserving_order,
+    )
+except ImportError:
+    from utils import (
+        normalize_text,
+        split_pipe_values,
+        text_has_phrase as has_phrase,
+        unique_preserving_order,
+    )
 
 
 EXAGGERATION_CUES = [
@@ -266,6 +269,43 @@ def marketing_exaggeration(
     return False
 
 
+def limitation_penalty(candidate: dict[str, object]) -> int:
+    blob = candidate_blob(candidate)
+    annotation_notes = normalize_text(candidate.get("annotation_notes", ""))
+    penalty = 0
+    penalty_phrases = [
+        "limitation fragment",
+        "no additional benefit",
+        "benefit plateaus",
+        "benefit plateau",
+        "plateau",
+        "response varies",
+        "indirect evidence",
+        "effect is small",
+        "equivocal",
+        "mixed",
+        "does not justify",
+    ]
+    for phrase in penalty_phrases:
+        if has_phrase(blob, phrase) or has_phrase(annotation_notes, phrase):
+            penalty += 4
+    return penalty
+
+
+def looks_like_limiting_fragment(candidate: dict[str, object]) -> bool:
+    blob = candidate_blob(candidate)
+    annotation_notes = normalize_text(candidate.get("annotation_notes", ""))
+    return any(
+        has_phrase(blob, phrase) or has_phrase(annotation_notes, phrase)
+        for phrase in [
+            "limitation fragment",
+            "no additional benefit",
+            "response varies",
+            "useful for constraining claims",
+        ]
+    )
+
+
 def support_score(candidate: dict[str, object], claim_text: str, prefer_non_limiting: bool = False) -> int:
     score = 0
     supports_claim = str(candidate.get("supports_claim", "")).strip().lower()
@@ -303,6 +343,7 @@ def support_score(candidate: dict[str, object], claim_text: str, prefer_non_limi
         or has_phrase(blob, "1 6 g kg day")
     ):
         score -= 1
+        score -= limitation_penalty(candidate)
     return score
 
 
@@ -313,8 +354,13 @@ def select_primary_support_fragment(
 ) -> list[str]:
     if not exact_candidates:
         return []
+    candidate_pool = exact_candidates
+    if prefer_non_limiting:
+        non_limiting_candidates = [candidate for candidate in exact_candidates if not looks_like_limiting_fragment(candidate)]
+        if non_limiting_candidates:
+            candidate_pool = non_limiting_candidates
     ranked = sorted(
-        exact_candidates,
+        candidate_pool,
         key=lambda candidate: (
             -support_score(candidate, claim_text, prefer_non_limiting=prefer_non_limiting),
             int(candidate.get("rank", 9999)),
@@ -324,18 +370,37 @@ def select_primary_support_fragment(
     return [fragment_id] if fragment_id else []
 
 
-def select_partial_support_fragments(exact_candidates: list[dict[str, object]]) -> list[str]:
+def select_partial_support_fragments(
+    matched_matrix_id: str,
+    exact_candidates: list[dict[str, object]],
+    claim_text: str,
+) -> list[str]:
     fragment_ids = []
+    partial_candidates = []
     for candidate in exact_candidates:
         supports_claim = str(candidate.get("supports_claim", "")).strip().lower()
         support_strength = str(candidate.get("support_strength", "")).strip().lower()
         if supports_claim == "partial" or support_strength == "weak":
+            partial_candidates.append(candidate)
             fragment_ids.append(str(candidate.get("fragment_id", "")).strip())
+
+    if matched_matrix_id == "M03" and has_phrase(claim_text, "small"):
+        ranked = sorted(
+            partial_candidates,
+            key=lambda candidate: (
+                -support_score(candidate, claim_text, prefer_non_limiting=False),
+                int(candidate.get("rank", 9999)),
+            ),
+        )
+        if ranked:
+            fragment_id = str(ranked[0].get("fragment_id", "")).strip()
+            return [fragment_id] if fragment_id else []
+
     if fragment_ids:
         return unique_preserving_order(fragment_ids)
     return select_primary_support_fragment(
         exact_candidates,
-        "",
+        claim_text,
         prefer_non_limiting=False,
     )
 
@@ -504,7 +569,11 @@ def evaluate_claim(
         return result
 
     if partial_family:
-        supporting_fragment_ids = select_partial_support_fragments(exact_candidates)
+        supporting_fragment_ids = select_partial_support_fragments(
+            matched_matrix_id,
+            exact_candidates,
+            claim_text,
+        )
         result["supporting_fragment_ids"] = supporting_fragment_ids
         result["conditions_to_state"] = conditions_to_state(matched_matrix_id, claim_parse, exact_candidates)
         result["verdict"] = "partially_backed"

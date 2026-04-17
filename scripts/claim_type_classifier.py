@@ -2,38 +2,25 @@
 """
 Claim-type classifier: TF-IDF + Logistic Regression.
 
-Supervised text classification component that predicts claim_type
-(performance, body_composition, energy_fatigue, recovery) from raw
-claim text.
-
-This is a bounded ML extension. It does not replace the deterministic
-parser or reasoning layer. It exists to demonstrate a supervised
-learning task on the project's domain and to strengthen the project's
-coverage of Advanced Machine Learning.
-
-Input:   raw claim text (a short natural-language supplement claim)
-Target:  claim_type (one of four canonical categories)
-Features: TF-IDF unigram+bigram vectors from claim text
-
-Usage:
-    python scripts/claim_type_classifier.py train
-    python scripts/claim_type_classifier.py predict --claim "creatine boosts strength"
+This is a bounded supervised component that predicts `claim_type`
+from raw claim text. It complements the deterministic parser but does
+not replace the main retrieval + reasoning pipeline.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
+import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 from sklearn.model_selection import StratifiedKFold, cross_validate
 from sklearn.pipeline import Pipeline
-import joblib
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -42,128 +29,161 @@ DATASET_PATH = PROJECT_ROOT / "data" / "ml" / "claim_type_dataset.csv"
 MODEL_DIR = PROJECT_ROOT / "models"
 MODEL_PATH = MODEL_DIR / "claim_type_model.joblib"
 METRICS_PATH = MODEL_DIR / "claim_type_metrics.json"
+_MODEL_CACHE = None
+
+
+def dataset_available(path: str | Path = DATASET_PATH) -> bool:
+    return Path(path).exists()
 
 
 def load_dataset(path: str | Path = DATASET_PATH) -> tuple[list[str], list[str]]:
-    """Load the labeled claim-type dataset."""
     df = pd.read_csv(path)
-    texts = df["claim_text"].tolist()
-    labels = df["claim_type"].tolist()
+    texts = [str(text).strip() for text in df["claim_text"].tolist()]
+    labels = [str(label).strip() for label in df["claim_type"].tolist()]
     return texts, labels
 
 
 def build_pipeline() -> Pipeline:
-    """Build the TF-IDF + Logistic Regression pipeline."""
-    return Pipeline([
-        ("tfidf", TfidfVectorizer(
-            lowercase=True,
-            ngram_range=(1, 2),
-            max_features=500,
-            sublinear_tf=True,
-        )),
-        ("clf", LogisticRegression(
-            max_iter=1000,
-            solver="lbfgs",
-            C=1.0,
-            random_state=42,
-        )),
-    ])
-
-
-def train(_args: argparse.Namespace) -> None:
-    """Train the classifier with stratified cross-validation, then save."""
-    texts, labels = load_dataset()
-    pipeline = build_pipeline()
-
-    print(f"Dataset: {len(texts)} examples")
-    class_counts = pd.Series(labels).value_counts().sort_index()
-    for cls, count in class_counts.items():
-        print(f"  {cls}: {count}")
-
-    # --- Stratified 5-fold cross-validation ---
-    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    scoring = ["accuracy", "f1_macro", "f1_weighted"]
-    cv_results = cross_validate(
-        pipeline, texts, labels, cv=cv, scoring=scoring, return_train_score=False,
+    return Pipeline(
+        [
+            (
+                "tfidf",
+                TfidfVectorizer(
+                    lowercase=True,
+                    ngram_range=(1, 2),
+                    max_features=500,
+                    sublinear_tf=True,
+                ),
+            ),
+            (
+                "clf",
+                LogisticRegression(
+                    max_iter=1000,
+                    solver="lbfgs",
+                    C=1.0,
+                    random_state=42,
+                ),
+            ),
+        ]
     )
 
-    cv_accuracy_mean = cv_results["test_accuracy"].mean()
-    cv_accuracy_std = cv_results["test_accuracy"].std()
-    cv_f1_macro_mean = cv_results["test_f1_macro"].mean()
-    cv_f1_macro_std = cv_results["test_f1_macro"].std()
-    cv_f1_weighted_mean = cv_results["test_f1_weighted"].mean()
-    cv_f1_weighted_std = cv_results["test_f1_weighted"].std()
 
-    print("\n=== Stratified 5-Fold Cross-Validation ===")
-    print(f"Accuracy:     {cv_accuracy_mean:.3f} +/- {cv_accuracy_std:.3f}")
-    print(f"F1 (macro):   {cv_f1_macro_mean:.3f} +/- {cv_f1_macro_std:.3f}")
-    print(f"F1 (weighted): {cv_f1_weighted_mean:.3f} +/- {cv_f1_weighted_std:.3f}")
+def train_classifier(
+    dataset_path: str | Path = DATASET_PATH,
+    save_model: bool = True,
+    save_metrics: bool = True,
+) -> dict[str, object]:
+    texts, labels = load_dataset(dataset_path)
+    pipeline = build_pipeline()
 
-    # --- Train final model on full dataset ---
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    scoring = ["accuracy", "f1_macro", "f1_weighted"]
+    cv_results = cross_validate(pipeline, texts, labels, cv=cv, scoring=scoring, return_train_score=False)
+
     pipeline.fit(texts, labels)
-    y_pred = pipeline.predict(texts)
-    report_text = classification_report(labels, y_pred)
-    report_dict = classification_report(labels, y_pred, output_dict=True)
-
-    print("\n=== Training Set Classification Report ===")
-    print(report_text)
-
-    # --- Save model and metrics ---
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
-    joblib.dump(pipeline, MODEL_PATH)
-    print(f"Model saved to: {MODEL_PATH}")
+    predictions = pipeline.predict(texts)
+    report_dict = classification_report(labels, predictions, output_dict=True)
 
     metrics = {
-        "cv_accuracy_mean": round(cv_accuracy_mean, 4),
-        "cv_accuracy_std": round(cv_accuracy_std, 4),
-        "cv_f1_macro_mean": round(cv_f1_macro_mean, 4),
-        "cv_f1_macro_std": round(cv_f1_macro_std, 4),
-        "cv_f1_weighted_mean": round(cv_f1_weighted_mean, 4),
-        "cv_f1_weighted_std": round(cv_f1_weighted_std, 4),
+        "cv_accuracy_mean": round(float(cv_results["test_accuracy"].mean()), 4),
+        "cv_accuracy_std": round(float(cv_results["test_accuracy"].std()), 4),
+        "cv_f1_macro_mean": round(float(cv_results["test_f1_macro"].mean()), 4),
+        "cv_f1_macro_std": round(float(cv_results["test_f1_macro"].std()), 4),
+        "cv_f1_weighted_mean": round(float(cv_results["test_f1_weighted"].mean()), 4),
+        "cv_f1_weighted_std": round(float(cv_results["test_f1_weighted"].std()), 4),
         "dataset_size": len(texts),
         "classes": sorted(set(labels)),
         "training_report": report_dict,
     }
-    with open(METRICS_PATH, "w", encoding="utf-8") as f:
-        json.dump(metrics, f, indent=2)
-    print(f"Metrics saved to: {METRICS_PATH}")
+
+    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    if save_model:
+        joblib.dump(pipeline, MODEL_PATH)
+    if save_metrics:
+        with open(METRICS_PATH, "w", encoding="utf-8") as handle:
+            json.dump(metrics, handle, indent=2)
+
+    return {
+        "model": pipeline,
+        "metrics": metrics,
+    }
 
 
-def predict(args: argparse.Namespace) -> None:
-    """Load saved model and predict claim_type for a single claim."""
-    if not MODEL_PATH.exists():
-        print(f"Error: model not found at {MODEL_PATH}. Run 'train' first.")
-        sys.exit(1)
+def load_saved_model(path: str | Path = MODEL_PATH):
+    model_path = Path(path)
+    if not model_path.exists():
+        return None
+    return joblib.load(model_path)
 
-    pipeline = joblib.load(MODEL_PATH)
-    claim = args.claim
-    prediction = pipeline.predict([claim])[0]
-    probabilities = pipeline.predict_proba([claim])[0]
-    classes = pipeline.classes_
 
-    print(f"Claim:     {claim}")
-    print(f"Predicted: {prediction}")
-    print("Probabilities:")
-    for cls, prob in sorted(zip(classes, probabilities), key=lambda x: -x[1]):
-        print(f"  {cls}: {prob:.3f}")
+def load_or_train_model():
+    global _MODEL_CACHE
+    if _MODEL_CACHE is not None:
+        return _MODEL_CACHE
+    model = load_saved_model()
+    if model is not None:
+        _MODEL_CACHE = model
+        return model
+    if not dataset_available():
+        return None
+    _MODEL_CACHE = train_classifier(save_model=False, save_metrics=False)["model"]
+    return _MODEL_CACHE
+
+
+def predict_claim_type(claim_text: str, model=None) -> dict[str, object] | None:
+    claim = str(claim_text or "").strip()
+    if not claim:
+        return None
+
+    model = model or load_or_train_model()
+    if model is None:
+        return None
+
+    prediction = str(model.predict([claim])[0])
+    probabilities = model.predict_proba([claim])[0]
+    probability_map = {
+        str(label): round(float(prob), 4)
+        for label, prob in sorted(zip(model.classes_, probabilities), key=lambda item: -item[1])
+    }
+    top_confidence = max(probability_map.values()) if probability_map else 0.0
+
+    return {
+        "predicted_claim_type": prediction,
+        "confidence": round(top_confidence, 4),
+        "probabilities": probability_map,
+    }
+
+
+def classifier_available() -> bool:
+    return dataset_available()
+
+
+def _cmd_train(_args: argparse.Namespace) -> None:
+    result = train_classifier(save_model=True, save_metrics=True)
+    print(json.dumps(result["metrics"], indent=2))
+
+
+def _cmd_predict(args: argparse.Namespace) -> None:
+    result = predict_claim_type(args.claim)
+    if result is None:
+        raise SystemExit("Classifier unavailable or empty claim.")
+    print(json.dumps(result, indent=2))
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Claim-type classifier (TF-IDF + Logistic Regression)",
-    )
+    parser = argparse.ArgumentParser(description="Claim-type classifier (TF-IDF + Logistic Regression)")
     subparsers = parser.add_subparsers(dest="command")
 
-    subparsers.add_parser("train", help="Train and evaluate the classifier")
+    subparsers.add_parser("train", help="Train and save the classifier")
 
-    predict_parser = subparsers.add_parser("predict", help="Predict claim_type for a claim")
-    predict_parser.add_argument("--claim", required=True, help="Raw claim text to classify")
+    predict_parser = subparsers.add_parser("predict", help="Predict claim_type for a single claim")
+    predict_parser.add_argument("--claim", required=True, help="Raw claim text")
 
     args = parser.parse_args()
     if args.command == "train":
-        train(args)
+        _cmd_train(args)
     elif args.command == "predict":
-        predict(args)
+        _cmd_predict(args)
     else:
         parser.print_help()
 

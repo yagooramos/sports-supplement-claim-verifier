@@ -26,15 +26,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-import sys
-
 import pandas as pd
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from utils import normalize_text, tokenize  # re-exported for backward compatibility
+try:
+    from .utils import normalize_text, tokenize  # re-exported for backward compatibility
+except ImportError:
+    from utils import normalize_text, tokenize  # re-exported for backward compatibility
 
 
 @dataclass

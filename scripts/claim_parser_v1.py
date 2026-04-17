@@ -12,22 +12,27 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import sys
 from pathlib import Path
 
 import pandas as pd
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from utils import (
-    normalize_text,
-    split_pipe_values,
-    text_has_any_phrase,
-    text_has_phrase,
-    unique_preserving_order,
-)
+try:
+    from .utils import (
+        normalize_text,
+        split_pipe_values,
+        text_has_any_phrase,
+        text_has_phrase,
+        unique_preserving_order,
+    )
+except ImportError:
+    from utils import (
+        normalize_text,
+        split_pipe_values,
+        text_has_any_phrase,
+        text_has_phrase,
+        unique_preserving_order,
+    )
 
 DEFAULT_RULES_PATH = SCRIPT_DIR.parent / "data" / "config" / "claim_parser_rules.json"
 
