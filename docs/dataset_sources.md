@@ -1,51 +1,68 @@
 # Dataset Sources
 
-This document summarizes the main information sources used to build the dataset.
+This document summarizes the external source families used to assemble the current canonical dataset snapshot.
 
-These sources were used to support:
+The repository dataset is curated, compact, and static by design.
+It is not an automated live sync of the biomedical literature.
 
-- document discovery
-- source screening
-- corpus construction
-- evidence extraction
-- claim framing
-- benchmark design
+Official source references below were checked against their current official pages on April 13, 2026.
 
-## Core Literature Sources
+## Literature Search And Full-Text Sources
 
 - `PubMed`
-  Biomedical literature search platform used to identify relevant papers and filter by article type, date, and availability.
+  Main biomedical literature search interface used for discovery and article screening.
+  Official page: <https://pubmed.ncbi.nlm.nih.gov/>
 
 - `PubMed Central (PMC)`
-  Free full-text repository of biomedical and life sciences articles.
+  Full-text biomedical archive used to access open articles and inspect evidence directly.
+  Official page: <https://pmc.ncbi.nlm.nih.gov/>
 
 - `PMC Open Access Subset`
-  Reusable subset of PMC suitable for text mining and corpus construction.
+  Reusable PMC subset relevant for corpus construction and text-mining-oriented workflows.
+  Official page: <https://pmc.ncbi.nlm.nih.gov/tools/openftlist/>
 
 - `Cochrane Library`
-  High-value source for systematic reviews and health evidence synthesis.
+  High-value source for systematic reviews and evidence synthesis.
+  Official site: <https://www.cochranelibrary.com/>
 
-## Institutional Sources
+## Institutional And Applied Reference Sources
 
 - `NIH Office of Dietary Supplements (ODS)`
-  Institutional portal with scientific information on dietary supplements.
+  Institutional reference source for supplement background, mechanisms, and evidence framing.
+  Official site: <https://ods.od.nih.gov/>
 
 - `NIH ODS Fact Sheets`
-  Technical and outreach fact sheets on supplement ingredients and related evidence.
+  Ingredient-level fact sheets and topic pages used to frame claims and scope boundaries.
+  Official site: <https://ods.od.nih.gov/factsheets/list-all/>
 
-- `Australian Institute of Sport (AIS) - Supplements`
-  Applied framework for sports supplements and athlete-oriented evidence review.
+- `Australian Institute of Sport (AIS) Supplements`
+  Applied athlete-oriented framework used for practical supplement categorization and evidence framing.
+  Official site: <https://www.ais.gov.au/nutrition/supplements>
 
-- `AIS Group A Supplements`
-  Reference subset of supplements with stronger practical support within the AIS framework.
+- `AIS Sports Supplement Framework`
+  Practical framework used as a secondary reference for supplement categories and support context.
+  Official page: <https://www.ais.gov.au/__data/assets/pdf_file/0005/1085711/36837_AIS-sports-supplements-framework-position-statement-contextual-information.pdf>
 
-## Domain-Specific Reference Sources
+## Domain-Specific Position Statements
 
-- `International Society of Sports Nutrition (ISSN)`
-  Reference society in sports nutrition.
+- `Journal of the International Society of Sports Nutrition (JISSN)`
+  Position stands and review articles relevant to creatine, caffeine, protein, and related sports-nutrition claims.
+  Official journal site: <https://jissn.biomedcentral.com/>
 
-- `ISSN Position Stands Collection`
-  Collection of position stands useful for topics such as creatine, caffeine, protein, and nutrient timing.
+- `ISSN Position Stands`
+  Official position papers published through the society journal were used as high-value domain references.
+  Example official position stand page: <https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0177-8>
+
+## ML Dataset Sources
+
+The auxiliary classifier dataset in `data/ml/claim_type_dataset.csv` was assembled from:
+
+- `matrix_scope.csv` example claims
+- `reasoning_eval_cases.csv` claims with known labels
+- PubMed-derived paraphrases from sports nutrition position-stand literature
+- controlled domain augmentations to diversify phrasings across claim categories
+
+Each row records its provenance in the `source` column.
 
 ## ML Dataset Sources
 
@@ -71,5 +88,6 @@ Key PubMed references used for deriving training examples:
 
 ## Notes
 
-The dataset is not derived from a single source.
-It was assembled from a combination of literature databases, institutional references, and domain-specific review material.
+- The current corpus is not derived from one single source.
+- The evidence snapshot was assembled from a mix of literature databases, institutional references, and domain-specific reviews.
+- Repository updates may refine keywords, annotations, and benchmark expectations without implying a full external literature refresh.

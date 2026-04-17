@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
@@ -16,6 +17,9 @@ from scripts.claim_type_classifier import classifier_available
 from scripts.llm_adapter import is_available as llm_is_available
 from scripts.ocr_claim_extractor import build_default_parser, build_ocr_engine, extract_claim_from_image
 from scripts.pipeline import Pipeline
+
+
+ROOT_DIR = Path(__file__).resolve().parent
 
 
 VERDICT_CONFIG: dict[str, dict[str, str]] = {
@@ -82,6 +86,29 @@ MODE_LABELS = {
     "multimodal": "Text + Image",
 }
 
+EXAMPLE_CLAIMS: dict[str, list[str]] = {
+    "-- pick an example --": [],
+    "Backed claims": [
+        "Creatine increases strength during resistance training.",
+        "Caffeine improves endurance performance.",
+        "Beta-alanine supports high-intensity exercise capacity.",
+    ],
+    "Partially backed claims": [
+        "Creatine helps build lean muscle.",
+        "Whey protein supports recovery after training.",
+        "Whey protein supports muscle growth.",
+    ],
+    "Potentially misleading claims": [
+        "Creatine guarantees strength gains for everyone.",
+        "Beta-alanine improves exercise capacity without loading.",
+        "More whey protein always means more muscle.",
+    ],
+    "Out-of-scope / unparseable": [
+        "Vitamin C cures the common cold.",
+        "This supplement makes you stronger.",
+    ],
+}
+
 
 @st.cache_resource
 def get_ocr_engine():
@@ -126,10 +153,76 @@ def to_label(value: object) -> str:
     return text if text else "-"
 
 
+def load_coverage_table() -> pd.DataFrame:
+    matrix_path = ROOT_DIR / "data" / "sources" / "matrix_scope.csv"
+    fragments_path = ROOT_DIR / "data" / "annotations" / "evidence_fragments.csv"
+    try:
+        matrix_df = pd.read_csv(matrix_path).fillna("")
+        fragments_df = pd.read_csv(fragments_path).fillna("")
+    except Exception:
+        return pd.DataFrame()
+
+    fragment_counts = fragments_df.groupby("matrix_id").size().reset_index(name="fragments")
+    merged = matrix_df.merge(fragment_counts, on="matrix_id", how="left").fillna({"fragments": 0})
+    merged["fragments"] = merged["fragments"].astype(int)
+
+    display = merged[["matrix_id", "ingredient", "claim_type", "outcome_target", "fragments"]].copy()
+    display.columns = ["ID", "Ingredient", "Claim type", "Outcome", "Fragments"]
+    display["Ingredient"] = display["Ingredient"].str.replace("_", " ").str.title()
+    display["Claim type"] = display["Claim type"].str.replace("_", " ")
+    display["Outcome"] = display["Outcome"].str.replace("_", " ")
+    return display
+
+
+def render_sidebar() -> None:
+    with st.sidebar:
+        st.header("Corpus coverage")
+        st.caption("Supplement-claim pairs currently covered by the canonical corpus.")
+        coverage_df = load_coverage_table()
+        if coverage_df.empty:
+            st.warning("Could not load the coverage table.")
+        else:
+            st.dataframe(coverage_df, hide_index=True, use_container_width=True)
+
+        st.divider()
+        with st.expander("How it works", expanded=False):
+            st.markdown(
+                """
+1. **OCR and claim extraction** convert an uploaded label or screenshot into candidate claim text.
+2. **Parser** maps the claim to the project schema: `ingredient`, `claim_type`, and `outcome_target`.
+3. **Retrieval** finds the top evidence fragments in the canonical corpus.
+4. **Reasoning** produces the authoritative verdict from scope, coverage, and evidence strength.
+5. **Classifier and local LLM** remain optional support layers and never replace the deterministic verdict.
+                """
+            )
+
+
 def ensure_default_state() -> None:
     st.session_state.setdefault("claim_text", "Creatine increases strength during resistance training.")
     st.session_state.setdefault("ocr_image_hash", "")
     st.session_state.setdefault("ocr_result", None)
+    st.session_state.setdefault("example_group", "-- pick an example --")
+    st.session_state.setdefault("selected_example", "")
+    st.session_state.setdefault("last_example_claim", "")
+
+
+def render_example_selector() -> None:
+    st.caption("Quick demo examples")
+    group = st.selectbox("Try an example", options=list(EXAMPLE_CLAIMS.keys()), key="example_group")
+    options = EXAMPLE_CLAIMS.get(group, [])
+    if not options:
+        st.session_state["selected_example"] = ""
+        return
+
+    current = st.session_state.get("selected_example", "")
+    if current not in options:
+        st.session_state["selected_example"] = options[0]
+
+    st.radio("Select a claim", options=options, key="selected_example", label_visibility="collapsed")
+    selected_example = str(st.session_state.get("selected_example", "")).strip()
+    if selected_example and selected_example != st.session_state.get("last_example_claim"):
+        st.session_state["claim_text"] = selected_example
+        st.session_state["last_example_claim"] = selected_example
 
 
 def process_uploaded_claim_image(uploaded_image) -> bytes | None:
@@ -193,6 +286,7 @@ def render_classifier_panel(prediction: dict[str, object] | None) -> None:
 def main() -> None:
     st.set_page_config(page_title="Sports Supplement Claim Verifier", page_icon=":mag:", layout="wide")
     ensure_default_state()
+    render_sidebar()
 
     st.title("Sports Supplement Claim Verifier")
     st.caption(
@@ -211,6 +305,7 @@ def main() -> None:
 
     with col_text:
         st.subheader("Claim Text")
+        render_example_selector()
         st.text_area(
             "Claim",
             key="claim_text",

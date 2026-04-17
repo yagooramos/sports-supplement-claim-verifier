@@ -22,6 +22,9 @@ Keep the repository coherent, runnable, multimodal, and benchmarked:
 - [x] Integrate the claim-type classifier dataset and metrics
 - [x] Integrate optional local LLM adapter support
 - [x] Add structured multimodal pipeline support
+- [x] Add grouped example-claim shortcuts in the Streamlit interface
+- [x] Add corpus coverage sidebar with fragment counts
+- [x] Add a sidebar "How it works" explainer
 - [x] Refresh main documentation to match the merged repository state
 
 ## Current Validation Snapshot
