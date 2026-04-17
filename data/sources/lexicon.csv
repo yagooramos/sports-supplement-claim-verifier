@@ -17,3 +17,49 @@ LEX_015,outcome,strength,strength
 LEX_016,outcome,post_exercise_recovery,recovery
 LEX_017,dose_unit,gram,g
 LEX_018,dose_unit,milligram,mg
+LEX_019,ingredient,citrulline_malate,citrulline
+LEX_020,ingredient,citrulline_malate,citrulline malate
+LEX_021,ingredient,citrulline_malate,L-citrulline
+LEX_022,ingredient,vitamin_d,vitamin D
+LEX_023,ingredient,vitamin_d,vitamin D3
+LEX_024,ingredient,vitamin_d,cholecalciferol
+LEX_025,ingredient,fish_oil,fish oil
+LEX_026,ingredient,fish_oil,omega-3
+LEX_027,ingredient,fish_oil,omega 3
+LEX_028,ingredient,fish_oil,EPA
+LEX_029,ingredient,fish_oil,DHA
+LEX_030,ingredient,hmb,HMB
+LEX_031,ingredient,hmb,beta-hydroxy beta-methylbutyrate
+LEX_032,ingredient,sodium_bicarbonate,sodium bicarbonate
+LEX_033,ingredient,sodium_bicarbonate,baking soda
+LEX_034,ingredient,sodium_bicarbonate,bicarb
+LEX_035,ingredient,nitrate_beetroot,nitrate
+LEX_036,ingredient,nitrate_beetroot,beetroot
+LEX_037,ingredient,nitrate_beetroot,beetroot juice
+LEX_038,ingredient,nitrate_beetroot,beet juice
+LEX_039,ingredient,ashwagandha,ashwagandha
+LEX_040,ingredient,ashwagandha,KSM-66
+LEX_041,ingredient,ashwagandha,withania
+LEX_042,ingredient,taurine,taurine
+LEX_043,claim_expression,cognitive,improves focus
+LEX_044,claim_expression,cognitive,enhances reaction time
+LEX_045,claim_expression,cognitive,sharpens mental performance
+LEX_046,claim_expression,health,supports immune health
+LEX_047,claim_expression,health,promotes bone health
+LEX_048,claim_expression,performance,increases endurance
+LEX_049,claim_expression,performance,improves blood flow
+LEX_050,claim_expression,recovery,reduces inflammation
+LEX_051,claim_expression,recovery,reduces soreness
+LEX_052,claim_expression,body_composition,preserves lean mass
+LEX_053,outcome,reaction_time_focus,focus
+LEX_054,outcome,reaction_time_focus,reaction time
+LEX_055,outcome,immune_function,immune function
+LEX_056,outcome,immune_function,immune health
+LEX_057,outcome,blood_flow_oxygen_delivery,blood flow
+LEX_058,outcome,blood_flow_oxygen_delivery,oxygen delivery
+LEX_059,outcome,inflammation_reduction,inflammation
+LEX_060,outcome,muscle_protein_synthesis,protein synthesis
+LEX_061,outcome,time_to_exhaustion,time to exhaustion
+LEX_062,ingredient,beta_alanine,beta alanine
+LEX_063,ingredient,l_carnitine,l-carnitine
+LEX_064,ingredient,l_carnitine,carnitine

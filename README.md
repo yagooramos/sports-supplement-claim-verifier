@@ -1,158 +1,167 @@
-# Project
+# Sports Supplement Claim Verifier
 
-## Project Goal
+## Overview
 
-The goal of this project is to build a conservative and auditable claim-verification system for sports-supplement claims.
+This repository is a conservative and auditable claim-verification system for sports-supplement claims.
 
-The project is organized around a canonical tabular corpus with three core fields:
+The current main repo now combines:
+
+- the validated deterministic baseline from the principal repository
+- the richer multimodal and ML-oriented components found in `.claude/worktrees/lucid-jones`
+
+The canonical schema remains centered on:
 
 - `ingredient`
 - `claim_type`
 - `outcome_target`
 
-## Final Objective
+## Current Functional Scope
 
-The current baseline verifies one claim at a time and exposes the full decision flow visually:
+The repository now supports:
 
-1. parse the claim into the project schema
-2. retrieve candidate evidence fragments
-3. apply deterministic reasoning to produce a conservative result
+1. text-only claim verification
+2. image-only verification through OCR claim extraction
+3. multimodal verification using text + image together
+4. deterministic parsing, retrieval, and reasoning
+5. bounded supervised ML prediction of `claim_type`
+6. optional local LLM assistance through Ollama for parser fallback and explanation generation
 
-The baseline prioritizes:
+The deterministic reasoning path is still the authoritative core.
 
-- traceability
-- explicit structure
-- conservative decisions
-- minimal reproducible evaluation
+## Current Status
 
-## Why This Architecture
+Validated snapshot on April 14, 2026:
 
-The project starts from:
+- retrieval benchmark: `20/20`
+- reasoning benchmark: `16/16`
+- Streamlit app: runnable
+- OCR image flow: integrated
+- ML classifier dataset and metrics: integrated
+- local LLM support: optional and auto-detected
 
-- a structured corpus
-- a lexical retrieval layer
-- a deterministic reasoning layer
+## Architecture
 
-This design was chosen because it:
+### Deterministic Core
 
-- keeps the system interpretable
-- makes the verification process easy to inspect
-- provides a strong baseline for future project work
+- `scripts/claim_parser_v1.py`
+- `scripts/lexical_retriever_v1.py`
+- `scripts/reasoning_v1.py`
+- `scripts/pipeline.py`
 
-## What The Project Uses
+### Vision And OCR
 
-The current version uses:
+- `scripts/ocr_claim_extractor.py`
+- `scripts/vision_v1.py`
+- image test asset in `data/test_images/`
 
-- a canonical corpus of source tables and annotated evidence fragments
-- lexical retrieval to recover candidate evidence
-- deterministic reasoning to decide scope, coverage, and support
-- shallow claim parsing as a support step for raw text inputs
-- a Streamlit frontend as the main user-facing interface
+### Machine Learning
 
-It does not currently use:
+- `scripts/claim_type_classifier.py`
+- labeled dataset in `data/ml/claim_type_dataset.csv`
+- reference metrics in `models/claim_type_metrics.json`
 
-- semantic retrieval
-- neural ranking
-- end-to-end machine learning
-- chatbot-style free-form generation
+### Optional LLM Layer
 
-## Operational Layers
+- `scripts/llm_adapter.py`
+- local Ollama integration only when available
 
-The project has two operational layers:
+### UI
 
-- `retrieval`
-- `reasoning`
+- `app.py`
 
-Claim parsing is included as a support component that prepares raw text for the two main layers.
+## Repository Layout
+
+- `app.py`: main Streamlit interface
+- `data/sources/`: canonical source tables
+- `data/annotations/`: canonical evidence annotations
+- `data/benchmarks/`: retrieval and reasoning benchmarks
+- `data/config/`: parser rules
+- `data/ml/`: claim-type classifier dataset
+- `data/test_images/`: synthetic vision test asset
+- `models/`: classifier metrics and optional local artifacts
+- `scripts/`: deterministic, OCR, ML, LLM, and pipeline modules
+- `docs/`: technical notes and source inventory
+
+## Data Snapshot
+
+Current repository snapshot:
+
+- `18` lexicon rows
+- `10` matrix-scope rows
+- `15` evidence fragments
+- `20` retrieval benchmark queries
+- `16` reasoning benchmark cases
+- `345` claim-type classification examples
+
+The canonical evidence corpus is still curated and compact.
+The ML dataset is an auxiliary project dataset, not a replacement for the canonical reasoning corpus.
+
+## Run
+
+Install requirements:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the app:
+
+```bash
+python -m streamlit run app.py
+```
+
+On Windows in this repo:
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+## Benchmarks
+
+Run deterministic repository benchmarks:
+
+```bash
+python -m scripts.evaluate_baseline
+```
+
+Train the classifier:
+
+```bash
+python -m scripts.claim_type_classifier train
+```
+
+Predict claim type:
+
+```bash
+python -m scripts.claim_type_classifier predict --claim "creatine boosts strength"
+```
+
+Generate or inspect the test image:
+
+```bash
+python -m scripts.vision_v1 generate-test
+python -m scripts.vision_v1 extract --image data/test_images/creatine_label.png
+```
+
+## Notes On The Merge
+
+When contrasting the principal repo with `.claude/worktrees/lucid-jones`, the useful additions were:
+
+- supervised claim-type classification
+- richer multimodal pipeline shape
+- optional LLM adapter
+- test image and ML dataset assets
+
+The Tesseract/OpenCV OCR implementation from the worktree was not adopted as-is.
+This main repo keeps the current `RapidOCR`-based extraction because it is more portable in this environment and was already validated locally.
 
 ## Academic Alignment
 
-This baseline mainly supports:
+The repository now covers:
 
 - `Speech and Natural Language Processing`
-  Through claim parsing, lexical retrieval, text normalization, schema alignment, and corpus-driven claim handling.
-
 - `Intelligent Systems`
-  Through explicit knowledge representation, rule-based reasoning, and auditable deterministic decisions.
+- `Advanced Machine Learning`
+- `Computer Vision`
 
-This baseline is not yet the machine-learning-focused stage of the project.
-Its role is to establish the structured and reproducible system that later ML work can build on or be compared against.
-
-## Project Context For Another Agent
-
-If this repository is handed to another programming agent, use `PROJECT_CONTEXT.md` as the full briefing document.
-
-That document records:
-
-- the current project scope
-- the academic role of each subject area already identified in the repository
-- the expected deliverables and constraints for this baseline
-- the current implementation status
-- the open decisions that remain before a later ML extension
-
-## Repository Structure
-
-- `app.py`: Streamlit entrypoint for the single-claim verifier
-- `data/sources/`: canonical source tables
-- `data/annotations/`: canonical evidence annotations
-- `data/benchmarks/`: minimal retrieval and reasoning benchmark files
-- `data/config/`: parser configuration and domain rules
-- `scripts/`: operational logic and support modules
-- `docs/`: concise technical notes and dataset-source summaries
-- `ROADMAP.md`: current project status and next steps
-
-## Main Components
-
-### Operational
-
-- `scripts/lexical_retriever_v1.py`: lexical retrieval over the canonical evidence corpus
-- `scripts/reasoning_v1.py`: deterministic reasoning over structured claim and retrieval inputs
-
-### Support
-
-- `scripts/claim_parser_v1.py`: shallow parser for mapping raw claims into the project schema
-- `scripts/pipeline.py`: thin orchestration layer that runs parsing, retrieval, and reasoning end to end
-- `scripts/utils.py`: shared normalization and text-matching helpers
-
-The parser keeps its logic in code while its domain-specific rule lists live in `data/config/claim_parser_rules.json`.
-
-## Minimal Data Layout
-
-### Canonical Sources
-
-- `data/sources/lexicon.csv`
-- `data/sources/matrix_scope.csv`
-
-### Canonical Annotations
-
-- `data/annotations/evidence_fragments.csv`
-
-### Minimal Benchmarks
-
-- `data/benchmarks/retrieval_eval_queries.csv`
-- `data/benchmarks/reasoning_eval_cases.csv`
-
-## Minimal Viable Documentation
-
-- `README.md`
-  Main project entry point: goal, architecture, academic alignment, structure, and run instructions.
-
-- `ROADMAP.md`
-  Current status and next steps.
-
-- `PROJECT_CONTEXT.md`
-  Full reusable briefing for another programming agent, including academic framing, scope, deliverables, status, and constraints.
-
-- `docs/README.md`
-  Short technical map of scripts, data files, and configuration.
-
-- `docs/dataset_sources.md`
-  Overview of the external sources used to build the dataset.
-
-## Official Run Command
-
-Run the baseline app from the repository root:
-
-```bash
-streamlit run app.py
-```
+The ML and LLM layers remain bounded extensions around the deterministic core.

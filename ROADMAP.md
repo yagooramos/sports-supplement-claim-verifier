@@ -2,40 +2,41 @@
 
 ## Current Goal
 
-Keep the baseline coherent, runnable, and easy to inspect:
+Keep the repository coherent, runnable, multimodal, and benchmarked:
 
 - canonical corpus
-- retrieval
-- reasoning
-- single-command interface
-
-This baseline is intended to cover:
-
-- `Speech and Natural Language Processing`
-- `Intelligent Systems`
-
-`Advanced Machine Learning` remains outside the current baseline.
+- deterministic parser, retriever, and reasoner
+- OCR-assisted image input
+- multimodal pipeline
+- bounded ML classifier
+- optional local LLM support
 
 ## Completed
 
-- [x] Define a minimal repository structure
-- [x] Define the minimal canonical data needed for the project core
-- [x] Define the minimal script set needed for parsing, retrieval, and reasoning
-- [x] Consolidate scripts, data, and dataset-source notes into the current project structure
-- [x] Translate the minimal dataset into English
-- [x] Simplify the parser by moving domain rules into `data/config/claim_parser_rules.json`
-- [x] Add concise project documentation for scripts, data, and dataset sources
-- [x] Prune non-essential files from the minimal baseline
-- [x] Add a single-command Streamlit interface for one-claim verification
+- [x] Stabilize the canonical repository structure
+- [x] Validate deterministic retrieval and reasoning
+- [x] Add OCR-based claim extraction
+- [x] Add a package-safe `scripts/` layout
+- [x] Add benchmark runner for deterministic evaluation
+- [x] Merge the useful advanced components from `.claude/worktrees/lucid-jones`
+- [x] Integrate the claim-type classifier dataset and metrics
+- [x] Integrate optional local LLM adapter support
+- [x] Add structured multimodal pipeline support
+- [x] Refresh main documentation to match the merged repository state
+
+## Current Validation Snapshot
+
+- Retrieval benchmark: `20/20`
+- Reasoning benchmark: `16/16`
+- Streamlit startup check: passed
 
 ## Next Steps
 
-- [ ] Validate the Streamlit baseline on a small set of canonical, out-of-scope, and non-parseable claims
-- [ ] Decide whether to keep the parser visible in the public baseline or keep it framed strictly as internal support
-- [ ] Define the next extension path for machine-learning-oriented work
-- [ ] Decide whether the next interface step should be benchmark inspection or corpus browsing
+- [ ] Validate the merged multimodal flow with real supplement photos, not only clean screenshots and the synthetic test image
+- [ ] Decide whether classifier predictions should remain informational or influence downstream parsing
+- [ ] Decide whether local LLM fallback should stay optional support or become a formal deliverable
+- [ ] Add compact benchmark and corpus inspection views in the app
 
 ## Notes
 
-This roadmap tracks project progress.
-It should stay short and operational.
+The deterministic verdict path remains the authoritative project core.

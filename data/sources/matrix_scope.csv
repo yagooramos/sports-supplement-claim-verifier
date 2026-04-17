@@ -9,3 +9,23 @@ M07,whey_protein,recovery,post_exercise_recovery,evaluable,supports recovery|hel
 M08,whey_protein,body_composition,lean_mass_gain,evaluable,supports muscle growth|helps build lean muscle
 M09,bcaa,recovery,muscle_soreness_recovery,evaluable,reduces soreness|supports recovery
 M10,l_carnitine,body_composition,fat_mass_reduction,evaluable,supports fat loss|helps burn fat
+M11,caffeine,cognitive,reaction_time_focus,evaluable,improves focus|enhances reaction time
+M12,citrulline_malate,performance,blood_flow_oxygen_delivery,evaluable,improves blood flow|enhances oxygen delivery
+M13,citrulline_malate,performance,time_to_exhaustion,evaluable,extends time to exhaustion|delays fatigue during exercise
+M14,citrulline_malate,recovery,muscle_soreness_recovery,evaluable,reduces muscle soreness|decreases post-exercise soreness
+M15,vitamin_d,performance,strength,evaluable,supports muscle strength|improves muscle function
+M16,vitamin_d,health,immune_function,evaluable,supports immune health|reduces infection risk
+M17,fish_oil,recovery,inflammation_reduction,evaluable,reduces inflammation|lowers inflammatory markers
+M18,fish_oil,recovery,muscle_soreness_recovery,evaluable,reduces muscle soreness|helps with DOMS
+M19,hmb,body_composition,lean_mass_gain,evaluable,preserves lean mass|supports muscle retention
+M20,hmb,recovery,muscle_soreness_recovery,evaluable,reduces muscle damage|supports recovery from exercise
+M21,sodium_bicarbonate,performance,exercise_capacity_high_intensity_tolerance,evaluable,improves high-intensity capacity|delays acidosis
+M22,sodium_bicarbonate,performance,power_high_intensity_performance,evaluable,enhances sprint performance|improves anaerobic output
+M23,nitrate_beetroot,performance,endurance_exercise_performance,evaluable,improves endurance performance|enhances aerobic efficiency
+M24,nitrate_beetroot,performance,time_to_exhaustion,evaluable,extends time to exhaustion|improves exercise tolerance
+M25,ashwagandha,performance,strength,evaluable,improves strength|enhances muscular strength
+M26,ashwagandha,energy_fatigue,perceived_energy_fatigue_reduction,evaluable,reduces stress and fatigue|supports adaptation
+M27,taurine,performance,endurance_exercise_performance,evaluable,improves endurance|supports exercise performance
+M28,taurine,energy_fatigue,perceived_energy_fatigue_reduction,evaluable,reduces exercise fatigue|supports energy levels
+M29,creatine_monohydrate,cognitive,reaction_time_focus,evaluable,supports cognitive function|improves mental performance
+M30,whey_protein,body_composition,muscle_protein_synthesis,evaluable,stimulates muscle protein synthesis|enhances protein synthesis

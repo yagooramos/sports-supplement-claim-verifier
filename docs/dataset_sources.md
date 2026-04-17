@@ -47,6 +47,28 @@ These sources were used to support:
 - `ISSN Position Stands Collection`
   Collection of position stands useful for topics such as creatine, caffeine, protein, and nutrient timing.
 
+## ML Dataset Sources
+
+The claim-type classification dataset (`data/ml/claim_type_dataset.csv`) was derived from:
+
+- `matrix_scope.csv` example claims (direct extraction)
+- `reasoning_eval_cases.csv` claim texts with known labels (direct extraction)
+- ISSN position stand abstracts retrieved from PubMed (claim-level paraphrases)
+- Domain-vocabulary augmentations (systematic combination of known ingredients and outcome terms)
+
+Each row in the dataset records its provenance in the `source` column.
+
+Key PubMed references used for deriving training examples:
+
+- ISSN position stand on caffeine and exercise performance (PMID 33388079)
+- ISSN position stand on beta-alanine (PMID 26175657)
+- ISSN position stand on creatine supplementation (PMID 28615996)
+- Common questions and misconceptions about creatine supplementation (PMID 33557850)
+- Protein distribution and muscle-building (PMID 29497353)
+- Dietary protein and muscle hypertrophy with resistance exercise (PMID 29414855)
+- BCAAs and muscle protein synthesis (PMID 28852372)
+- BCAA supplement timing and exercise-induced muscle soreness (PMID 28944645)
+
 ## Notes
 
 The dataset is not derived from a single source.
