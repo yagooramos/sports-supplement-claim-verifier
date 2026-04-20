@@ -7,9 +7,14 @@ This folder keeps the technical notes concise while the repository root remains 
 ### Deterministic Core
 
 - `scripts/claim_parser_v1.py`: shallow schema-oriented claim parser
-- `scripts/lexical_retriever_v1.py`: BM25 lexical retrieval over the evidence corpus
+- `scripts/lexical_retriever_v1.py`: configurable field-weighted BM25 retrieval over the evidence corpus
 - `scripts/reasoning_v1.py`: deterministic verdict logic
 - `scripts/pipeline.py`: unified text, image, and multimodal orchestration layer
+
+### Retrieval Optimization
+
+- `scripts/optimize_retriever_ga.py`: offline genetic optimization for retriever parameters
+- `models/retriever_optimized_config.json`: versioned selected config used by runtime retrieval
 
 ### OCR And Vision
 
@@ -49,6 +54,14 @@ This folder keeps the technical notes concise while the repository root remains 
 - `data/ml/claim_type_dataset.csv`: auxiliary labeled dataset for supervised claim-type classification
 - `models/claim_type_metrics.json`: reference classifier metrics
 
+### Retriever Optimization Artifact
+
+- `models/retriever_optimized_config.json`: stores:
+  - selected `k1`
+  - selected `b`
+  - per-field retrieval weights
+  - baseline vs optimized retrieval summary
+
 ### Vision Assets
 
 - `data/test_images/creatine_label.png`: synthetic test image for OCR and pipeline checks
@@ -56,14 +69,30 @@ This folder keeps the technical notes concise while the repository root remains 
 ## Current Snapshot
 
 - deterministic retrieval benchmark: `20/20`
+- deterministic retrieval MRR with optimized config: `0.975`
 - deterministic reasoning benchmark: `16/16`
 - classifier dataset size: `345`
+
+Baseline retrieval before optimization:
+
+- `hit@5 = 0.95`
+- `MRR = 0.8833`
 
 ## Main Commands
 
 ```bash
 python -m streamlit run app.py
 python -m scripts.evaluate_baseline
+python -m scripts.optimize_retriever_ga baseline
+python -m scripts.optimize_retriever_ga optimize
+python -m scripts.optimize_retriever_ga compare
 python -m scripts.claim_type_classifier train
 python -m scripts.vision_v1 extract --image data/test_images/creatine_label.png
 ```
+
+## Runtime Behavior
+
+- the genetic algorithm is never executed during normal app or pipeline use
+- runtime retrieval loads the saved optimized config if present
+- if the config file is missing, the retriever falls back to baseline defaults without breaking the pipeline
+- deterministic reasoning remains unchanged

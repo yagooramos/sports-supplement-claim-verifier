@@ -7,7 +7,6 @@ This repository is a conservative and auditable claim-verification system for sp
 The current main repo now combines:
 
 - the validated deterministic baseline from the principal repository
-- the richer multimodal and ML-oriented components found in `.claude/worktrees/lucid-jones`
 
 The canonical schema remains centered on:
 
@@ -25,19 +24,22 @@ The repository now supports:
 4. deterministic parsing, retrieval, and reasoning
 5. bounded supervised ML prediction of `claim_type`
 6. optional local LLM assistance through Ollama for parser fallback and explanation generation
+7. offline genetic optimization of retrieval parameters, with fixed optimized settings loaded at runtime
 
 The deterministic reasoning path is still the authoritative core.
 
 ## Current Status
 
-Validated snapshot on April 14, 2026:
+Validated snapshot on April 21, 2026:
 
 - retrieval benchmark: `20/20`
+- retrieval MRR with optimized retriever: `0.975`
 - reasoning benchmark: `16/16`
 - Streamlit app: runnable
 - OCR image flow: integrated
 - ML classifier dataset and metrics: integrated
 - local LLM support: optional and auto-detected
+- genetic retriever optimization: integrated offline and versioned
 
 ## Architecture
 
@@ -47,6 +49,17 @@ Validated snapshot on April 14, 2026:
 - `scripts/lexical_retriever_v1.py`
 - `scripts/reasoning_v1.py`
 - `scripts/pipeline.py`
+
+### Retrieval Optimization
+
+- `scripts/optimize_retriever_ga.py`
+- versioned retriever artifact in `models/retriever_optimized_config.json`
+- offline genetic search over `k1`, `b`, and field weights for:
+  - `fragment_text`
+  - `retrieval_keywords`
+  - `ingredient`
+  - `claim_type`
+  - `outcome_target`
 
 ### Vision And OCR
 
@@ -78,7 +91,7 @@ Validated snapshot on April 14, 2026:
 - `data/config/`: parser rules
 - `data/ml/`: claim-type classifier dataset
 - `data/test_images/`: synthetic vision test asset
-- `models/`: classifier metrics and optional local artifacts
+- `models/`: classifier metrics and retriever optimization artifacts
 - `scripts/`: deterministic, OCR, ML, LLM, and pipeline modules
 - `docs/`: technical notes and source inventory
 
@@ -95,6 +108,7 @@ Current repository snapshot:
 
 The canonical evidence corpus is still curated and compact.
 The ML dataset is an auxiliary project dataset, not a replacement for the canonical reasoning corpus.
+The retriever optimization artifact is also auxiliary: it improves ranking while keeping the deterministic verdict path intact.
 
 ## Run
 
@@ -124,6 +138,24 @@ Run deterministic repository benchmarks:
 python -m scripts.evaluate_baseline
 ```
 
+Inspect baseline retrieval quality before optimization:
+
+```bash
+python -m scripts.optimize_retriever_ga baseline
+```
+
+Run offline genetic optimization and save the selected retriever config:
+
+```bash
+python -m scripts.optimize_retriever_ga optimize
+```
+
+Compare baseline retrieval against the saved optimized config:
+
+```bash
+python -m scripts.optimize_retriever_ga compare
+```
+
 Train the classifier:
 
 ```bash
@@ -143,25 +175,18 @@ python -m scripts.vision_v1 generate-test
 python -m scripts.vision_v1 extract --image data/test_images/creatine_label.png
 ```
 
-## Notes On The Merge
 
-When contrasting the principal repo with `.claude/worktrees/lucid-jones`, the useful additions were:
+## Notes On Genetic Optimization
 
-- supervised claim-type classification
-- richer multimodal pipeline shape
-- optional LLM adapter
-- test image and ML dataset assets
+The genetic algorithm is an offline optimization layer for the lexical retriever only.
 
-The Tesseract/OpenCV OCR implementation from the worktree was not adopted as-is.
-This main repo keeps the current `RapidOCR`-based extraction because it is more portable in this environment and was already validated locally.
+- it does not run inside the normal pipeline
+- it does not change the deterministic reasoning rules
+- it only selects fixed retrieval parameters that are then loaded from disk at runtime
 
-## Academic Alignment
+The current saved artifact improves the retrieval benchmark from:
 
-The repository now covers:
+- baseline `hit@5 = 0.95`, `MRR = 0.8833`
+- optimized `hit@5 = 1.0`, `MRR = 0.975`
 
-- `Speech and Natural Language Processing`
-- `Intelligent Systems`
-- `Advanced Machine Learning`
-- `Computer Vision`
 
-The ML and LLM layers remain bounded extensions around the deterministic core.

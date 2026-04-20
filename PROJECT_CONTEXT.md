@@ -1,14 +1,10 @@
-# Project Context For Another Programming Agent
-
-This file describes the current repository after merging the main repo with the more advanced worktree found in `.claude/worktrees/lucid-jones`.
-
 ## 1. Project Summary
 
 - Project name: `Sports Supplement Claim Verifier`
-- Current stage: runnable multimodal repository baseline
+- Current stage: runnable multimodal repository with offline-optimized retrieval
 - Primary objective: verify one supplement claim at a time with a conservative and auditable decision path
 - Current interface: Streamlit
-- Current repository shape: deterministic core plus bounded OCR, ML, and optional LLM extensions
+- Current repository shape: deterministic core plus bounded OCR, ML, optional LLM, and offline retriever optimization extensions
 
 ## 2. Current Execution Flow
 
@@ -23,7 +19,7 @@ The current expected flow is:
 7. produce the deterministic verdict
 8. optionally attach classifier output and optional local LLM assistance output
 
-The deterministic parser, retriever, and reasoner remain authoritative.
+The deterministic parser, optimized retriever configuration, and reasoner remain authoritative in runtime.
 
 ## 3. Included Components
 
@@ -47,6 +43,12 @@ The deterministic parser, retriever, and reasoner remain authoritative.
 - `data/ml/claim_type_dataset.csv`
 - `models/claim_type_metrics.json`
 
+### Offline Retrieval Optimization
+
+- `scripts/optimize_retriever_ga.py`
+- `models/retriever_optimized_config.json`
+- genetic search over BM25 `k1`, `b`, and per-field weights
+
 ### Optional LLM Support
 
 - `scripts/llm_adapter.py`
@@ -58,20 +60,8 @@ The deterministic parser, retriever, and reasoner remain authoritative.
 - `data/benchmarks/retrieval_eval_queries.csv`
 - `data/benchmarks/reasoning_eval_cases.csv`
 
-## 4. Important Merge Decision
 
-The advanced `.claude` worktree included a Tesseract/OpenCV-based OCR path.
-The main repository does not use that exact implementation.
-
-Instead, the merged repo keeps the current `RapidOCR`-based OCR stack because:
-
-- it already worked locally in this environment
-- it avoided the external system dependency on Tesseract
-- it was easier to validate immediately
-
-So the merge is feature-level, not a literal file-for-file replacement.
-
-## 5. Current Data Snapshot
+## 4. Current Data Snapshot
 
 - canonical lexicon rows: `18`
 - matrix scope rows: `10`
@@ -80,15 +70,16 @@ So the merge is feature-level, not a literal file-for-file replacement.
 - reasoning benchmark cases: `16`
 - classifier dataset rows: `345`
 
-## 6. Current Validation Snapshot
+## 5. Current Validation Snapshot
 
-Validated on April 14, 2026:
+Validated on April 21, 2026:
 
 - retrieval benchmark: `20/20`
+- retrieval MRR with optimized config: `0.975`
 - reasoning benchmark: `16/16`
 - app startup: passed
 
-## 7. Academic Scope
+## 6. Academic Scope
 
 The merged repository now spans:
 
@@ -96,7 +87,7 @@ The merged repository now spans:
   Through parsing, retrieval, OCR text extraction, normalization, and schema mapping.
 
 - `Intelligent Systems`
-  Through explicit deterministic reasoning and conservative verdict logic.
+  Through explicit deterministic reasoning, conservative verdict logic, and offline genetic optimization of retriever parameters.
 
 - `Advanced Machine Learning`
   Through the bounded TF-IDF + Logistic Regression `claim_type` classifier.
@@ -104,22 +95,29 @@ The merged repository now spans:
 - `Computer Vision`
   Through OCR-assisted text extraction from supplement images.
 
-## 8. Constraints
+## 7. Constraints
 
 - preserve the deterministic verdict path as authoritative
-- treat OCR, classifier, and LLM layers as support layers unless explicitly re-scoped
+- treat OCR, classifier, LLM, and GA layers as support layers unless explicitly re-scoped
 - keep docs aligned with actual code and benchmark state
 - do not silently turn the project into an opaque end-to-end ML system
 - prefer portability and inspectability over sophistication for its own sake
 
-## 9. Open Decisions
+The retriever optimization specifically must remain:
+
+- offline only
+- versioned as a saved config artifact
+- separate from the runtime reasoning logic
+
+## 8. Open Decisions
 
 - whether classifier output should remain advisory or feed parsing decisions
 - whether local LLM fallback should remain optional
 - whether the next UI step should focus on corpus browsing or benchmark inspection
+- whether the retrieval benchmark should be expanded beyond the current compact canonical set
 - whether multilingual claim handling should become a next-stage feature
 
-## 10. Practical Commands
+## 9. Practical Commands
 
 Run app:
 
@@ -131,6 +129,24 @@ Run deterministic benchmarks:
 
 ```bash
 python -m scripts.evaluate_baseline
+```
+
+Run the retriever GA baseline report:
+
+```bash
+python -m scripts.optimize_retriever_ga baseline
+```
+
+Optimize retriever parameters offline:
+
+```bash
+python -m scripts.optimize_retriever_ga optimize
+```
+
+Compare baseline and optimized retrieval:
+
+```bash
+python -m scripts.optimize_retriever_ga compare
 ```
 
 Train classifier:

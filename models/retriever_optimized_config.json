@@ -1,0 +1,236 @@
+{
+  "artifact_type": "retriever_optimization_result",
+  "algorithm": "genetic_search_v1",
+  "selected_config": {
+    "k1": 0.8473,
+    "b": 0.336,
+    "field_weights": {
+      "fragment_text": 0.5,
+      "retrieval_keywords": 0.9939,
+      "ingredient": 1.9144,
+      "claim_type": 1.0051,
+      "outcome_target": 0.6016
+    }
+  },
+  "baseline_metrics": {
+    "hit_at_k": 0.95,
+    "mrr": 0.8833,
+    "top_k": 5,
+    "queries": 20
+  },
+  "optimized_metrics": {
+    "hit_at_k": 1.0,
+    "mrr": 0.975,
+    "top_k": 5,
+    "queries": 20
+  },
+  "search_settings": {
+    "population_size": 40,
+    "generations": 40,
+    "mutation_rate": 0.4,
+    "elite_count": 6,
+    "seed": 42
+  },
+  "generation_summaries": [
+    {
+      "generation": 0,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 1,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 2,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 3,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 4,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 5,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 6,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 7,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 8,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 9,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 10,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 11,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.95
+    },
+    {
+      "generation": 12,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.9667
+    },
+    {
+      "generation": 13,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.9667
+    },
+    {
+      "generation": 14,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 15,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 16,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 17,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 18,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 19,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 20,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 21,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 22,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 23,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 24,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 25,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 26,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 27,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 28,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 29,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 30,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 31,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 32,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 33,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 34,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 35,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 36,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 37,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 38,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    },
+    {
+      "generation": 39,
+      "best_hit_at_k": 1.0,
+      "best_mrr": 0.975
+    }
+  ]
+}

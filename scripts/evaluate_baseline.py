@@ -24,6 +24,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_FRAGMENTS_CSV = REPO_ROOT / "data" / "annotations" / "evidence_fragments.csv"
 DEFAULT_RETRIEVAL_BENCHMARK_CSV = REPO_ROOT / "data" / "benchmarks" / "retrieval_eval_queries.csv"
 DEFAULT_REASONING_BENCHMARK_CSV = REPO_ROOT / "data" / "benchmarks" / "reasoning_eval_cases.csv"
+DEFAULT_RETRIEVER_CONFIG_PATH = lexical_retriever_v1.DEFAULT_RETRIEVER_CONFIG_PATH
 
 
 def _meaningful(value: object) -> str:
@@ -42,21 +43,30 @@ def _same_fragment_set(expected_value: str, actual_value: str) -> bool:
 def evaluate_retrieval(
     fragments_csv: str | Path = DEFAULT_FRAGMENTS_CSV,
     benchmark_csv: str | Path = DEFAULT_RETRIEVAL_BENCHMARK_CSV,
+    retriever_config_path: str | Path = DEFAULT_RETRIEVER_CONFIG_PATH,
     top_k: int = 5,
 ) -> dict[str, object]:
     benchmark_df = pd.read_csv(benchmark_csv).fillna("")
     fragments_df = lexical_retriever_v1.load_fragments(fragments_csv)
-    retriever = lexical_retriever_v1.BM25Retriever(fragments_df.to_dict(orient="records"))
+    retriever_config = lexical_retriever_v1.load_retriever_config(retriever_config_path)
+    retriever = lexical_retriever_v1.BM25Retriever(fragments_df.to_dict(orient="records"), config=retriever_config)
 
     query_results = []
     hit_count = 0
+    reciprocal_rank_sum = 0.0
     for row in benchmark_df.to_dict(orient="records"):
         query_text = str(row.get("query_text", "")).strip()
         expected_ids = split_pipe_values(row.get("expected_fragment_ids", ""))
         results = retriever.search(query_text, top_k=top_k)
         returned_ids = [result.fragment_id for result in results]
         hit = all(expected_id in returned_ids for expected_id in expected_ids)
+        first_relevant_rank = next(
+            (index for index, fragment_id in enumerate(returned_ids, start=1) if fragment_id in expected_ids),
+            None,
+        )
+        reciprocal_rank = round(1.0 / first_relevant_rank, 4) if first_relevant_rank else 0.0
         hit_count += int(hit)
+        reciprocal_rank_sum += reciprocal_rank
         query_results.append(
             {
                 "query_id": str(row.get("query_id", "")).strip(),
@@ -64,6 +74,7 @@ def evaluate_retrieval(
                 "expected_fragment_ids": expected_ids,
                 "returned_fragment_ids": returned_ids,
                 "hit": hit,
+                "reciprocal_rank": reciprocal_rank,
             }
         )
 
@@ -73,6 +84,7 @@ def evaluate_retrieval(
         "passed": hit_count,
         "total": total,
         "accuracy": round(hit_count / total, 4) if total else 0.0,
+        "mrr": round(reciprocal_rank_sum / total, 4) if total else 0.0,
         "queries": query_results,
     }
 
@@ -147,9 +159,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run minimal repository benchmarks.")
     parser.add_argument("--top-k", type=int, default=5, help="Top-k for retrieval benchmark.")
     parser.add_argument("--json", action="store_true", help="Print full JSON output.")
+    parser.add_argument(
+        "--retriever-config",
+        default=str(DEFAULT_RETRIEVER_CONFIG_PATH),
+        help="Path to retriever config JSON. Missing files fall back to baseline defaults.",
+    )
     args = parser.parse_args()
 
-    retrieval_report = evaluate_retrieval(top_k=args.top_k)
+    retrieval_report = evaluate_retrieval(top_k=args.top_k, retriever_config_path=args.retriever_config)
     reasoning_report = evaluate_reasoning()
 
     summary = {
@@ -158,6 +175,7 @@ def main() -> None:
             "passed": retrieval_report["passed"],
             "total": retrieval_report["total"],
             "accuracy": retrieval_report["accuracy"],
+            "mrr": retrieval_report["mrr"],
         },
         "reasoning": {
             "metric": reasoning_report["metric"],

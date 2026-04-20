@@ -45,6 +45,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_MATRIX_SCOPE_CSV = REPO_ROOT / "data" / "sources" / "matrix_scope.csv"
 DEFAULT_LEXICON_CSV = REPO_ROOT / "data" / "sources" / "lexicon.csv"
 DEFAULT_FRAGMENTS_CSV = REPO_ROOT / "data" / "annotations" / "evidence_fragments.csv"
+DEFAULT_RETRIEVER_CONFIG_PATH = lexical_retriever_v1.DEFAULT_RETRIEVER_CONFIG_PATH
 
 
 def enrich_candidates(
@@ -89,16 +90,22 @@ class Pipeline:
         matrix_scope_csv: str | Path = DEFAULT_MATRIX_SCOPE_CSV,
         lexicon_csv: str | Path = DEFAULT_LEXICON_CSV,
         fragments_csv: str | Path = DEFAULT_FRAGMENTS_CSV,
+        retriever_config_path: str | Path = DEFAULT_RETRIEVER_CONFIG_PATH,
         use_llm: bool = True,
     ):
         self.matrix_scope_csv = Path(matrix_scope_csv)
         self.lexicon_csv = Path(lexicon_csv)
         self.fragments_csv = Path(fragments_csv)
+        self.retriever_config_path = Path(retriever_config_path)
 
         self.parser = claim_parser_v1.build_parser(self.matrix_scope_csv, self.lexicon_csv)
         fragments_df = lexical_retriever_v1.load_fragments(self.fragments_csv).fillna("")
         self.fragment_lookup = build_fragment_lookup(self.fragments_csv)
-        self.retriever = lexical_retriever_v1.BM25Retriever(fragments_df.to_dict(orient="records"))
+        retriever_config = lexical_retriever_v1.load_retriever_config(self.retriever_config_path)
+        self.retriever = lexical_retriever_v1.BM25Retriever(
+            fragments_df.to_dict(orient="records"),
+            config=retriever_config,
+        )
         self.corpus_coverage = reasoning_v1.build_corpus_coverage(self.matrix_scope_csv, self.fragments_csv)
 
         self.use_llm = bool(use_llm and llm_is_available())
