@@ -12,3 +12,5 @@ Thumbs.db
 .DS_Store
 models/*.joblib
 _tmp_uploaded_image.*
+Sports_Supplement_Claim_Verifier_Presentation.pptx
+.gitignore
