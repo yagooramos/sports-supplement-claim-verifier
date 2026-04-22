@@ -90,22 +90,22 @@ EXAMPLE_CLAIMS: dict[str, list[str]] = {
     "-- pick an example --": [],
     "Backed claims": [
         "Creatine increases strength during resistance training.",
-        "Caffeine improves endurance performance.",
-        "Beta-alanine supports high-intensity exercise capacity.",
+        "Caffeine reduces perceived fatigue during exercise.",
+        "Beta-alanine at 4 to 6 g per day for at least 2 weeks can support high-intensity exercise capacity.",
     ],
     "Partially backed claims": [
-        "Creatine helps build lean muscle.",
-        "Whey protein supports recovery after training.",
-        "Whey protein supports muscle growth.",
+        "Creatine may support small gains in lean mass during training.",
+        "Whey helps you recover faster after lifting.",
+        "Whey can support lean mass gains during resistance training, but more is not always better.",
     ],
     "Potentially misleading claims": [
         "Creatine guarantees strength gains for everyone.",
-        "Beta-alanine improves exercise capacity without loading.",
-        "More whey protein always means more muscle.",
+        "Beta-alanine works for any sport even without a loading period.",
+        "Caffeine improves endurance performance.",
     ],
     "Out-of-scope / unparseable": [
-        "Vitamin C cures the common cold.",
-        "This supplement makes you stronger.",
+        "Electrolytes improve hydration performance.",
+        "This supplement makes you unstoppable.",
     ],
 }
 
