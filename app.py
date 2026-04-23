@@ -361,23 +361,38 @@ def main() -> None:
     st.info(effective_claim)
 
     vision_result = result.get("vision_result")
-    if vision_result:
+    uploaded_ocr_result = st.session_state.get("ocr_result") or {}
+    extracted_image_claim = str(uploaded_ocr_result.get("claim_text", "")).strip()
+    has_vision_matches = bool(
+        vision_result
+        and (
+            str(vision_result.get("detected_ingredient", "")).strip()
+            or vision_result.get("detected_claims")
+            or str(vision_result.get("detected_dose", "")).strip()
+        )
+    )
+    if vision_result or extracted_image_claim:
         st.divider()
-        st.subheader("Vision Extraction")
-        vcol1, vcol2 = st.columns(2)
-        with vcol1:
-            st.markdown(f"**Ingredient:** {to_label(vision_result.get('detected_ingredient'))}")
-            detected_claims = vision_result.get("detected_claims", [])
-            st.markdown(f"**Detected claims:** {', '.join(detected_claims) if detected_claims else '-'}")
-            st.markdown(f"**Detected dose:** {to_label(vision_result.get('detected_dose'))}")
-        with vcol2:
-            st.markdown(f"**Vision confidence:** {to_label(vision_result.get('vision_confidence'))}")
-            st.markdown(f"**Notes:** {to_label(vision_result.get('vision_notes'))}")
-            st.markdown(
-                f"**Preprocessing:** {', '.join(vision_result.get('preprocessing_steps', [])) or '-'}"
-            )
-        with st.expander("Vision details", expanded=False):
-            st.json(vision_result, expanded=False)
+        st.subheader("Image Analysis")
+        if extracted_image_claim:
+            st.success(f"**Extracted claim:** {extracted_image_claim}")
+
+        if vision_result and has_vision_matches:
+            vcol1, vcol2 = st.columns(2)
+            with vcol1:
+                st.markdown(f"**Ingredient:** {to_label(vision_result.get('detected_ingredient'))}")
+                detected_claims = vision_result.get("detected_claims", [])
+                st.markdown(f"**Detected claims:** {', '.join(detected_claims) if detected_claims else '-'}")
+                st.markdown(f"**Detected dose:** {to_label(vision_result.get('detected_dose'))}")
+            with vcol2:
+                st.markdown(f"**Vision confidence:** {to_label(vision_result.get('vision_confidence'))}")
+                st.markdown(f"**Notes:** {to_label(vision_result.get('vision_notes'))}")
+                st.markdown(
+                    f"**Preprocessing:** {', '.join(vision_result.get('preprocessing_steps', [])) or '-'}"
+                )
+        details_payload = {"ocr_claim_extraction": uploaded_ocr_result, "vision_result": vision_result}
+        with st.expander("Image extraction details", expanded=False):
+            st.json(details_payload, expanded=False)
 
     st.divider()
     render_classifier_panel(result.get("claim_type_prediction"))

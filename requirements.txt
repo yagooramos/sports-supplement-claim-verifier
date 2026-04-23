@@ -2,4 +2,5 @@ pandas
 streamlit
 pillow
 rapidocr-onnxruntime
+pytesseract
 scikit-learn
