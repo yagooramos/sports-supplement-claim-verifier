@@ -173,6 +173,19 @@ def load_image(image_path: str | Path) -> np.ndarray | None:
     return img
 
 
+def load_image_bytes(image_bytes: bytes) -> np.ndarray | None:
+    """Load an image from in-memory bytes using OpenCV."""
+    if not image_bytes:
+        return None
+    image_array = np.frombuffer(image_bytes, dtype=np.uint8)
+    if image_array.size == 0:
+        return None
+    img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    if img is None:
+        return None
+    return img
+
+
 # ---------------------------------------------------------------------------
 # OCR text extraction
 # ---------------------------------------------------------------------------
@@ -257,7 +270,10 @@ def assess_confidence(
 # Main extraction function
 # ---------------------------------------------------------------------------
 
-def extract_from_image(image_path: str | Path) -> dict[str, object]:
+def extract_from_image(
+    image_path: str | Path | None = None,
+    image_bytes: bytes | None = None,
+) -> dict[str, object]:
     """Full vision pipeline: load -> preprocess -> OCR -> extract.
 
     Returns a dict with:
@@ -275,9 +291,15 @@ def extract_from_image(image_path: str | Path) -> dict[str, object]:
         "preprocessing_steps": [],
     }
 
-    image = load_image(image_path)
+    if image_bytes is not None:
+        image = load_image_bytes(image_bytes)
+        image_source = "uploaded image bytes"
+    else:
+        image = load_image(image_path) if image_path is not None else None
+        image_source = str(image_path) if image_path is not None else "no image source"
+
     if image is None:
-        result["vision_notes"] = f"Could not load image: {image_path}"
+        result["vision_notes"] = f"Could not load image: {image_source}"
         return result
 
     processed, steps = preprocess_for_ocr(image)

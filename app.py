@@ -199,6 +199,7 @@ def render_sidebar() -> None:
 
 def ensure_default_state() -> None:
     st.session_state.setdefault("claim_text", "Creatine increases strength during resistance training.")
+    st.session_state.setdefault("pending_claim_text", "")
     st.session_state.setdefault("ocr_image_hash", "")
     st.session_state.setdefault("ocr_result", None)
     st.session_state.setdefault("example_group", "-- pick an example --")
@@ -251,7 +252,8 @@ def process_uploaded_claim_image(uploaded_image) -> bytes | None:
         st.session_state["ocr_result"] = ocr_result
         extracted_claim = str(ocr_result.get("claim_text", "")).strip()
         if extracted_claim:
-            st.session_state["claim_text"] = extracted_claim
+            st.session_state["pending_claim_text"] = extracted_claim
+            st.rerun()
 
     ocr_result = st.session_state.get("ocr_result") or {}
     extracted_claim = str(ocr_result.get("claim_text", "")).strip()
@@ -286,6 +288,10 @@ def render_classifier_panel(prediction: dict[str, object] | None) -> None:
 def main() -> None:
     st.set_page_config(page_title="Sports Supplement Claim Verifier", page_icon=":mag:", layout="wide")
     ensure_default_state()
+    pending_claim_text = str(st.session_state.get("pending_claim_text", "")).strip()
+    if pending_claim_text:
+        st.session_state["claim_text"] = pending_claim_text
+        st.session_state["pending_claim_text"] = ""
     render_sidebar()
 
     st.title("Sports Supplement Claim Verifier")
